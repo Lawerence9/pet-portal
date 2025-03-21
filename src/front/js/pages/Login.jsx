@@ -1,20 +1,14 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
-import LogoURL from "../../img/logo.jpeg";
-import "../../styles/home.css";
 
 
-export const Home = () => {
-	
+export const Login = () => {
+	const { store, actions } = useContext(Context);
 
 	return (
 		<div className="text-center mt-5">
-		
-		
-			<p>
-				<img src={LogoURL} />
-			</p>
-						
+			
+			<h1>LOGIN</h1>			
 		</div>
 	);
 };
