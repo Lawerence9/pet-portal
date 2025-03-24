@@ -326,7 +326,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//////////////////////////// GET FUNCTIONS  /////////////////////////////////////////////////////////  
 
-				getUSer: async (event) => {
+				getUser: async (event) => {
 
 					if (event) event.preventDefault();
 	
@@ -346,8 +346,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (!response.ok) {
 						if (response.status == "404") {
 							console.log("usuario no encontrado");
-							actions.createUser(store.user);
-	
+						
 						}
 	
 						return
@@ -357,6 +356,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					
 	
 				},
+
+
+				
 			
 
 				//////////////////////////// END OF GET FUNTIONS  ///////////////////////////////////////////////////////// 
