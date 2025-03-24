@@ -44,7 +44,7 @@ class News(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     importance_level = db.Column(db.Enum('low', 'medium', 'high', name="importance_level"))
     img_url = db.Column(db.String(300))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     user_to = db.relationship('Users', foreign_keys=[user_id], backref=db.backref('news'), lazy='select')
  
 
@@ -75,7 +75,7 @@ class Adoptions(db.Model):
    description = db.Column(db.Text)
    img_url = db.Column(db.String(255))
    adoption_priority = db.Column(db.Boolean, default=False) 
-   user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+   user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
    user_to = db.relationship('Users', foreign_keys=[user_id], backref=db.backref('adoptions'), lazy='select')
 
 
@@ -132,9 +132,9 @@ class Donations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     donation_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     is_public = db.Column(db.Boolean, default=True)
-    donor_name = db.Column(db.String(100), nullable=True)  
-    donor_amount = db.Column(db.Float, nullable=False)
-    sos_id = db.Column(db.Integer, db.ForeignKey('soscases.id'), nullable=False)
+    donnor_name = db.Column(db.String(100), nullable=True)  
+    donnor_ammount = db.Column(db.Float, nullable=True)
+    sos_id = db.Column(db.Integer, db.ForeignKey('soscases.id'), nullable=True)
     sos_to = db.relationship('SosCases', foreign_keys=[sos_id], backref=db.backref('donations', lazy='select'))
 
 
