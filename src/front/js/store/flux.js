@@ -7,11 +7,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			isLogged: false,
 			selectedCategory: "",
-			user: 'hector',
 			user_id: '1',
 			sos_id: '',
+			user: 'hector',
 			password: 'password',
 			notice:{},
+			animalShelter:{},
+			adoptions: {},
+			veterinary:{},
+			sosCase: {},
 			//host: "https://playground.4geeks.com",
 			selectedElement: {},
 			
@@ -27,7 +31,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json()
 				setStore({ message: data.message })
 			},
+
 			setUser: (newUser) => { setStore({ user: newUser }) },
+			setNotice: (newNotice) => { setStore({ unotice: newNotice }) },
+			setAnimalShelter: (newAnimalShelter) => { setStore({ animalShelter: newAnimalShelter }) },
+			setAdoption: (newAdoption) => { setStore({ adoptions: newAdoption }) },
+			setVeterinary: (newVeterinary) => { setStore({ veterinary: newVeterinary }) },
+			setSosCase: (newSosCase) => { setStore({ sosCase: newSosCase }) },
+			setDonation: (newDonation) => { setStore({ donation: newDonation }) },
+			setStore: (newStore) => { setStore({ sosCase: newStore }) },
+			
 			setSelectedElements: (elemento) => { setStore({ selectedElement: elemento }) },
 			setIsLogged: (value) => { setStore({ isLogged: value }) },
 			setiIsEditing: (valor) => { setStore({ isEditing: valor }) },
@@ -76,8 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			login: async (dataToSend) => {
 				
-				const endpoint = "api/login";
-				const uri = `${host}/${endpoint}`;
+				const uri = `${host}/api/login`;
 				const options = {
 					method: "POST",
 					headers: {
@@ -131,7 +143,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const store = getStore(); // Use getStore(); to use "store" datas. 
 
-				const uri = `${host}/${store.user}`;
+				const uri = `${host}/api/sing-up`;
 				const dataToSend = {
 					email: user.email,
 					password: user.password,
@@ -163,7 +175,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const store = getStore(); // Use getStore(); to use "store" datas. 
 
-				const uri = `${host}/${store.notice}`;
+				const uri = `${host}/api/news`;
 				const dataToSend = {
 					user_id: store.user_id,
 					title: notice.title,
@@ -201,7 +213,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const store = getStore(); // Use getStore(); to use "store" datas. 
 
-				const uri = `${host}/${store.adoption}`;
+				const uri = `${host}/api/Adoptions`;
 				const dataToSend = {
 					user_id: store.user_id,
 					status: adoption.status,
@@ -245,7 +257,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const store = getStore(); // Use getStore(); to use "store" datas. 
 
-				const uri = `${host}/${store.donation}`;
+				const uri = `${host}/api/donations`;
 				const dataToSend = {
 					sos_id: store.sos_id,
 					donation_date: donation.donation_date,
@@ -282,7 +294,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const store = getStore(); // Use getStore(); to use "store" datas. 
 
-				const uri = `${host}/${store.soscases}`;
+				const uri = `${host}/api/sos-cases`;
 				const dataToSend = {
 					user_id: store.user_id,
 					image_url: soscases.image_url,
@@ -335,7 +347,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const actions = getActions();
 	
 	
-					const uri = `${host}/${store.user}`;
+					const uri = `${host}/${store.user.id}`;
 	
 					const options = {
 						method: 'GET'
@@ -345,7 +357,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 	
 					if (!response.ok) {
 						if (response.status == "404") {
-							console.log("usuario no encontrado");
+							console.log("User not found");
+						
+						}
+	
+						return
+					}
+	
+					const data = await response.json();
+					
+	
+				},
+				
+
+				getNotice: async (event) => {
+
+					if (event) event.preventDefault();
+	
+	
+					const store = getStore();
+					const actions = getActions();
+	
+	
+					const uri = `${host}/api/news/${store.notice.id}`;
+	
+					const options = {
+						method: 'GET'
+					}
+	
+					const response = await fetch(uri, options);
+	
+					if (!response.ok) {
+						if (response.status == "404") {
+							console.log("Notice not found");
 						
 						}
 	
@@ -357,8 +401,164 @@ const getState = ({ getStore, getActions, setStore }) => {
 	
 				},
 
+				getAnimalShelter: async (event) => {
 
+					if (event) event.preventDefault();
+	
+	
+					const store = getStore();
+					const actions = getActions();
+	
+	
+					const uri = `${host}/api/animal-shelter/${store.AnimalShelter.id}`;
+					
+	
+					const options = {
+						method: 'GET'
+					}
+	
+					const response = await fetch(uri, options);
+	
+					if (!response.ok) {
+						if (response.status == "404") {
+							console.log("Animal Shelter not found");
+						
+						}
+	
+						return
+					}
+	
+					const data = await response.json();
 				
+	
+				},
+
+				getAdoptions: async (event) => {
+
+					if (event) event.preventDefault();
+	
+	
+					const store = getStore();
+					const actions = getActions();
+	
+	
+					const uri = `${host}/api/adoptions/${store.adoptions.id}`;
+	
+					const options = {
+						method: 'GET'
+					}
+	
+					const response = await fetch(uri, options);
+	
+					if (!response.ok) {
+						if (response.status == "404") {
+							console.log("Adoption not found");
+						
+						}
+	
+						return
+					}
+	
+					const data = await response.json();
+				
+	
+				},
+
+				getSosCase: async (event) => {
+
+					if (event) event.preventDefault();
+	
+	
+					const store = getStore();
+					const actions = getActions();
+	
+	
+					const uri = `${host}/api/sos-case/${store.sosCase.id}`;
+	
+					const options = {
+						method: 'GET'
+					}
+	
+					const response = await fetch(uri, options);
+	
+					if (!response.ok) {
+						if (response.status == "404") {
+							console.log("SoS Case not found");
+						
+						}
+	
+						return
+					}
+	
+					const data = await response.json();
+				
+	
+				},
+
+				getVeterinary: async (event) => {
+
+					if (event) event.preventDefault();
+	
+	
+					const store = getStore();
+					const actions = getActions();
+	
+	
+					const uri = `${host}/api/veterinary/${store.veterinary.id}`;
+	
+					const options = {
+						method: 'GET'
+					}
+	
+					const response = await fetch(uri, options);
+	
+					if (!response.ok) {
+						if (response.status == "404") {
+							console.log("Veterinary not found");
+						
+						}
+	
+						return
+					}
+	
+					const data = await response.json();
+				
+	
+				},
+
+				getDonation: async (event) => {
+
+					if (event) event.preventDefault();
+	
+	
+					const store = getStore();
+					const actions = getActions();
+	
+	
+					const uri = `${host}/api/donations/${store.donation.id}`;
+	
+					const options = {
+						method: 'GET'
+					}
+	
+					const response = await fetch(uri, options);
+	
+					if (!response.ok) {
+						if (response.status == "404") {
+							console.log("Veterinary not found");
+						
+						}
+	
+						return
+					}
+	
+					const data = await response.json();
+				
+	
+				},
+
+
+
 			
 
 				//////////////////////////// END OF GET FUNTIONS  ///////////////////////////////////////////////////////// 
