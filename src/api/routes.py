@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from api.models import db, Users
+from api.models import db, Users, News, Adoptions, SosCases, Donations
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
@@ -129,18 +129,18 @@ def news():
     respose_body = {}
     if request.method == "GET":
         rows = db.session.execute(db.select(News)).scalars()
-        results = [row.serialze for row in rows]
+        results = [row.serialize for row in rows]
         respose_body["message"] = "News data retrieved successfully"
         respose_body["results"] = results
         return respose_body, 200
     if request.method == "POST":
+        data = request.json
         new_news = News(
-            title = title,
-            body = body,
-            status = status,
-            img_url = img_url,
-            created_at= crated_at,
-            importance_level= importance_level)
+            title = data.get("title"),
+            body = data.get("body"),
+            img_url = data.get("img_url"),
+            created_at= data.get("created_at"),
+            importance_level= data.get("importance_level"))
         db.session.add(new_news)
         db.session.commit()
         respose_body["message"] = "News data posted successfully"
@@ -189,18 +189,20 @@ def adoptions():
         response_body["results"] = results
         return response_body, 200
     if request.method == "POST":
+        data = request.json
         new_adoption = Adoptions(
-            status=True,
+            # status=True,
             is_active=True,
-            how_old= how_old,
-            specie= specie,
-            race=race,
-            sex= sex,
-            unadopted_time= unadopted_time,
-            province= province,
-            description=description,
-            img_url=img_url,
-            adoption_priority=adoption_priority)
+            how_old= data.get("how_old"),
+            specie= data.get("specie"),
+            race= data.get("race"),
+            # sex= data.get("sex"),
+            # unadopted_time= data.get("unadopted_time"),
+            province= data.get("province"),
+            description=data.get("description"),
+            img_url=data.get("img_url"),
+            # adoption_priority=data.get("adoption_priority")
+            )
         db.session.add(new_adoption)
         db.session.commit()
         response_body["message"] = "Adoption posted successfully"
@@ -249,13 +251,14 @@ def sos_cases():
         response_body["results"] = results
         return response_body, 200
     if request.method == "POST":
+        data = request.json
         new_sos_case = SosCases(
-        img_url =img_url,
-        province = province,
-        specie=specie,
-        description=description,
-        status=status,
-        operation_cost=operation_cost,
+        img_url =data.get("img_url"),
+        province = data.get("province"),
+        specie=data.get("specie"),
+        description=data.get("description"),
+        status=data.get("status"),
+        operation_cost=data.get("operation_cost"),
         is_active=True)
         db.session.add(new_sos_case)
         db.session.commit
@@ -305,11 +308,13 @@ def donations():
         response_body["results"] = results
         return response_body, 200
     if request.method == "POST":
+        data= request.json
         new_donation = Donations(
-            donation_date= donation_date,
-            is_public = is_public,
-            donnor_naem=donnor_name,
-            donnor_ammount=donnor_ammount)
+            donation_date= data.get("donation_date"),
+            is_public = data.get("is_public"),
+            donnor_name=data.get("donnor_name"),
+            donnor_ammount=data.get("get.donnor_ammount")
+            )
         db.session.add(new_donation)
         db.session.commit()
         response_body["message"] = "Donation posted successfully"
