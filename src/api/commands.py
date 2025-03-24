@@ -27,7 +27,6 @@ def setup_commands(app):
             print("User: ", user.email, " created.")
         print("All test users created")
 
-
     @app.cli.command("insert-test-data")
     def insert_test_data():
         pass
