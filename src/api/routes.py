@@ -207,7 +207,7 @@ def get_adoptions():
 
 @api.route("/adoptions", methods=["POST"])
 @jwt_required()
-def get_adoptions():
+def adoptions():
     response_body= {}
     additional_claims = get_jwt()
     if additional_claims["role"] is not "Protector":
@@ -325,7 +325,7 @@ def get_sos_case(case_id):
 
 @api.route("/sos-cases/<int:case_id>", methods=["PUT", "DELETE"])
 @jwt_required()
-def get_sos_case(case_id):
+def sos_case(case_id):
     response_body={}
     row = db.session.execute(db.select(SosCases).where(SosCases.id) == case_id).scalar()
     if request.method == "PUT":
