@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 2d3a1e01a122
+Revision ID: ec4ad251d732
 Revises: 
-Create Date: 2025-03-24 20:23:00.113570
+Create Date: 2025-03-25 14:14:00.050750
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2d3a1e01a122'
+revision = 'ec4ad251d732'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -37,11 +37,12 @@ def upgrade():
     )
     op.create_table('adoptions',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('status', sa.Enum('adopted :)', 'waiting for you <3', 'adoption in process', 'recently rescue', name='status'), nullable=True),
+    sa.Column('status', sa.Enum('Adopted :)', 'Waiting for you <3', 'Adoption in process', 'Recently rescued', name='status'), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.Column('how_old', sa.Integer(), nullable=True),
-    sa.Column('specie', sa.Enum('dog', 'cat', 'other', name='specie'), nullable=True),
+    sa.Column('specie', sa.Enum('Dog', 'Cat', 'Other', name='specie'), nullable=True),
     sa.Column('race', sa.String(length=100), nullable=True),
+    sa.Column('sex', sa.Enum('Male', 'Female', name='sex'), nullable=False),
     sa.Column('unadopted_time', sa.DateTime(), nullable=False),
     sa.Column('province', sa.String(length=100), nullable=True),
     sa.Column('description', sa.Text(), nullable=True),
@@ -67,11 +68,11 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('img_url', sa.String(), nullable=True),
     sa.Column('province', sa.String(), nullable=True),
-    sa.Column('specie', sa.Enum('dog', 'cat', 'other', name='species_enum'), nullable=True),
+    sa.Column('specie', sa.Enum('Dog', 'Cat', 'Other', name='species_enum'), nullable=True),
     sa.Column('description', sa.Text(), nullable=True),
-    sa.Column('status', sa.Enum('served', 'waiting for help', name='status'), nullable=True),
-    sa.Column('operation_cost', sa.Integer(), nullable=True),
-    sa.Column('pending_amount', sa.Integer(), nullable=True),
+    sa.Column('status', sa.Enum('Served', 'Waiting for help', name='status_enum'), nullable=True),
+    sa.Column('operation_cost', sa.Float(), nullable=True),
+    sa.Column('pending_ammount', sa.Float(), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
@@ -82,8 +83,8 @@ def upgrade():
     sa.Column('donation_date', sa.DateTime(), nullable=False),
     sa.Column('is_public', sa.Boolean(), nullable=True),
     sa.Column('donnor_name', sa.String(length=100), nullable=True),
-    sa.Column('donnor_ammount', sa.Float(), nullable=False),
-    sa.Column('sos_id', sa.Integer(), nullable=False),
+    sa.Column('donnor_ammount', sa.Float(), nullable=True),
+    sa.Column('sos_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['sos_id'], ['soscases.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

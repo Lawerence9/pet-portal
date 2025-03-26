@@ -129,7 +129,7 @@ def news():
     respose_body = {}
     if request.method == "GET":
         rows = db.session.execute(db.select(News)).scalars()
-        results = [row.serialize for row in rows]
+        results = [row.serialize() for row in rows]
         respose_body["message"] = "News data retrieved successfully"
         respose_body["results"] = results
         return respose_body, 200
@@ -150,7 +150,7 @@ def news():
 
 @api.route("/news/<int:news_id>", methods=["GET", "PUT", "DELETE"])
 def new(news_id):
-    rows = db.session.execute(db.select(News).where(News.news_id == news_id)).scalars()
+    rows = db.session.execute(db.select(News).where(News.id == news_id)).scalars()
     response_body = {}
     if request.method == "GET":
         results = [row.serialze for row in rows]
@@ -158,7 +158,7 @@ def new(news_id):
         response_body["results"] = results
         return response_body, 200
     if request.method == "PUT":
-        row = db.session.execute(db.select(News).where(News.news_id == news_id)).scalar()
+        row = db.session.execute(db.select(News).where(News.id == news_id)).scalar()
         data = request.json
         row.title = data.get("title", row.title)
         row.body = data.get("body", row.body)
@@ -168,8 +168,9 @@ def new(news_id):
         response_body["message"] = "News updated successfully"
         return response_body, 200
     if request.method =="DELETE":
-        if rows:
-            db.session.delete(rows)
+        row = db.session.execute(db.select(News).where(News.id == news_id)).scalar()
+        if row:
+            db.session.delete(row)
             db.session.commit()
             response_body["message"] = "News deleted successfully"
             response_body["results"] ={}
@@ -184,24 +185,24 @@ def adoptions():
     response_body = {}
     if request.method == "GET":
         rows = db.session.execute(db.select(Adoptions)).scalars()
-        results = [row.serialize for row in rows]
+        results = [row.serialize() for row in rows]
         response_body["message"] = "Adoptions data retrieved successfully"
         response_body["results"] = results
         return response_body, 200
     if request.method == "POST":
         data = request.json
         new_adoption = Adoptions(
-            # status=True,
+            status=data.get("status"),
             is_active=True,
             how_old= data.get("how_old"),
             specie= data.get("specie"),
             race= data.get("race"),
-            # sex= data.get("sex"),
+            sex= data.get("sex"),
             # unadopted_time= data.get("unadopted_time"),
             province= data.get("province"),
             description=data.get("description"),
             img_url=data.get("img_url"),
-            # adoption_priority=data.get("adoption_priority")
+            adoption_priority=data.get("adoption_priority")
             )
         db.session.add(new_adoption)
         db.session.commit()
@@ -212,14 +213,14 @@ def adoptions():
 @api.route("/adoptions/<int:adoption_id>", methods=["GET", "PUT", "DELETE"])
 def adoption(adoption_id):
     response_body = {}
-    rows = db.session.execute(db.select(Adoptions).where(Adoptions.adoption_id == adoption_id)).scalars()
+    rows = db.session.execute(db.select(Adoptions).where(Adoptions.id == adoption_id)).scalars()
     if request.method == "GET":
         results = [row.serialize() for row in rows]
         response_body["message"] = "Adoption posted successfully"
         response_body["results"] = results
         return response_body, 200
     if request.method == "PUT":
-        row = db.session.execute(db.select(Adoptions).where(Adoptions.adoption_id == adoption_id)).scalar()
+        row = db.session.execute(db.select(Adoptions).where(Adoptions.id == adoption_id)).scalar()
         data = request.json
         row.status = data.get("status", row.status)
         row.is_active = data.get("is_active", row.is_active)
@@ -230,8 +231,9 @@ def adoption(adoption_id):
         response_body["message"] = "Adoption updated successfully"
         return response_body, 200
     if request.method == "DELETE":
-        if rows:
-            db.session.delete(rows)
+        row = db.session.execute(db.select(Adoptions).where(Adoptions.id == adoption_id)).scalar()
+        if row:
+            db.session.delete(row)
             db.session.commit()
             response_body["message"] = "Adoption deleted successfully"
             response_body["results"] = {}
@@ -253,15 +255,16 @@ def sos_cases():
     if request.method == "POST":
         data = request.json
         new_sos_case = SosCases(
-        img_url =data.get("img_url"),
-        province = data.get("province"),
-        specie=data.get("specie"),
-        description=data.get("description"),
-        status=data.get("status"),
-        operation_cost=data.get("operation_cost"),
-        is_active=True)
+            img_url =data.get("img_url"),
+            province = data.get("province"),
+            specie=data.get("specie"),
+            description=data.get("description"),
+            status=data.get("status"),
+            operation_cost=data.get("operation_cost"),
+            pending_amount=data.get("pending_amount"),
+            is_active=data.get("is_active"))
         db.session.add(new_sos_case)
-        db.session.commit
+        db.session.commit()
         response_body["message"] = "Sos case posted successfully"
         return response_body, 200
 
@@ -269,7 +272,7 @@ def sos_cases():
 @api.route("/sos-cases/<int:case_id>", methods=["GET", "PUT", "DELETE"])
 def sos_case(case_id):
     response_body = {}
-    rows = db.session.execute(db.select(SosCases).where(SosCases.case_id == case_id)).scalars()
+    rows = db.session.execute(db.select(SosCases).where(SosCases.id == case_id)).scalars()
     if request.method == "GET":
         results = [row.serialize() for row in rows]
         response_body["message"] = "Sos case data retrieved successfully"
@@ -277,7 +280,7 @@ def sos_case(case_id):
         return response_body, 200
     if request.method == "PUT":
         data = request.json
-        row = db.session.execute(db.select(SosCases).where(SosCases.case_id) == case_id).scalar()
+        row = db.session.execute(db.select(SosCases).where(SosCases.id) == case_id).scalar()
         row.specie = data.get("specie", row.specie)
         row.description = data.get("description", row.description)
         row.operation_cost = data.get("operation_cost", row.operation_cost)
@@ -287,8 +290,9 @@ def sos_case(case_id):
         response_body["message"] = "Sos case updated successfully"
         return response_body, 200
     if request.method == "DELETE":
-        if rows:
-            db.session.delete(rows)
+        row = db.session.execute(db.select(SosCases).where(SosCases.id == case_id)).scalar()
+        if row:
+            db.session.delete(row)
             db.session.commit()
             response_body["message"] = "Sos case deleted successfully"
             response_body["results"] = {}
@@ -312,9 +316,8 @@ def donations():
         new_donation = Donations(
             donation_date= data.get("donation_date"),
             is_public = data.get("is_public"),
-            donnor_name=data.get("donnor_name"),
-            donnor_ammount=data.get("get.donnor_ammount")
-            )
+            donor_name=data.get("donor_name"),
+            donor_amount=data.get("donor_amount"))
         db.session.add(new_donation)
         db.session.commit()
         response_body["message"] = "Donation posted successfully"
@@ -324,15 +327,16 @@ def donations():
 @api.route("/donations/<int:donation_id>", methods=["GET","DELETE"])
 def donation(donation_id):
     response_body = {}
-    rows = db.session.execute(db.select(Donations).where(Donations.donation_id == donation_id)).scalars()
+    rows = db.session.execute(db.select(Donations).where(Donations.id == donation_id)).scalars()
     if request.method == "GET":
         results = [row.serialize() for row in rows]
         response_body["message"] = "Donation data retireved successfully"
         response_body["results"] = results
         return response_body, 200
     if request.method == "DELETE":
-        if rows:
-            db.session.delete(rows)
+        row = db.session.execute(db.select(Donations).where(Donations.id == donation_id)).scalar()
+        if row:
+            db.session.delete(row)
             db.session.commit()
             response_body["message"] = "Donation deleted successfully"
             response_body["results"] = {}

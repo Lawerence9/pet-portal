@@ -57,19 +57,18 @@ class News(db.Model):
             'created_at': self.created_at,
             'importance_level': self.importance_level,
             'img_url': self.img_url,
-            'user_id': self.user_id
-        }
+            'user_id': self.user_id}
 
 
 class Adoptions(db.Model):
    __tablename__ = 'adoptions'
    id = db.Column(db.Integer, primary_key=True)
-   status = db.Column(db.Enum('adopted :)', 'waiting for you <3', 'adoption in process', 'recently rescue', name="status"))
+   status = db.Column(db.Enum('Adopted :)', 'Waiting for you <3', 'Adoption in process', 'Recently rescued', name="status"))
    is_active = db.Column(db.Boolean, default=True)
    how_old = db.Column(db.Integer) 
-   specie = db.Column(db.Enum('dog', 'cat', 'other', name="specie"))
+   specie = db.Column(db.Enum('Dog', 'Cat', 'Other', name="specie"))
    race = db.Column(db.String(100))
-   db.Column(db.Enum('male', 'female', name="sex"), nullable=False)
+   sex = db.Column(db.Enum('Male', 'Female', name="sex"), nullable=False)
    unadopted_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
    province = db.Column(db.String(100))
    description = db.Column(db.Text)
@@ -93,8 +92,7 @@ class Adoptions(db.Model):
             'description': self.description,
             'img_url': self.img_url,
             'adoption_priority': self.adoption_priority,
-            'user_id': self.user_id
-        }
+            'user_id': self.user_id}
 
 
 class SosCases(db.Model):
@@ -102,13 +100,13 @@ class SosCases(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     img_url = db.Column(db.String())
     province = db.Column(db.String())
-    specie = db.Column(db.Enum('dog', 'cat', 'other', name="species_enum"))
+    specie = db.Column(db.Enum('Dog', 'Cat', 'Other', name="species_enum"))
     description = db.Column(db.Text)
-    status = db.Column(db.Enum('served', 'waiting for help', name="status"))
-    operation_cost = db.Column(db.Integer)
-    pending_amount = db.Column(db.Integer)
+    status = db.Column(db.Enum('Served', 'Waiting for help', name="status_enum"))
+    operation_cost = db.Column(db.Float)
+    pending_amount = db.Column(db.Float)
     is_active = db.Column(db.Boolean, default=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     user_to = db.relationship('Users', foreign_keys=[user_id], backref=db.backref('soscases'), lazy='select')
 
 
@@ -123,8 +121,7 @@ class SosCases(db.Model):
             'operation_cost': self.operation_cost,
             'pending_amount': self.pending_amount,
             'is_active': self.is_active,
-            'user_id': self.user_id
-        }
+            'user_id': self.user_id}
 
 
 class Donations(db.Model):
@@ -132,8 +129,8 @@ class Donations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     donation_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     is_public = db.Column(db.Boolean, default=True)
-    donnor_name = db.Column(db.String(100), nullable=True)  
-    donnor_ammount = db.Column(db.Float, nullable=True)
+    donor_name = db.Column(db.String(100), nullable=True)  
+    donor_amount = db.Column(db.Float, nullable=True)
     sos_id = db.Column(db.Integer, db.ForeignKey('soscases.id'), nullable=True)
     sos_to = db.relationship('SosCases', foreign_keys=[sos_id], backref=db.backref('donations', lazy='select'))
 
@@ -143,6 +140,5 @@ class Donations(db.Model):
             'sos_id': self.sos_id,
             'donor_name': self.donor_name if self.is_public else "Anonymous",
             'donor_amount': self.donor_amount,
-            'donation_date': self.donation_date
-        }
+            'donation_date': self.donation_date}
     
