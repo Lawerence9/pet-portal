@@ -8,7 +8,7 @@ db = SQLAlchemy()
 class Users(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
+    user_name = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     contact_person = db.Column(db.String(100))
@@ -17,7 +17,7 @@ class Users(db.Model):
     services = db.Column(db.String(200))  
     opening_hours = db.Column(db.String(100))
     account_number = db.Column(db.Integer)
-    role = db.Column(db.Enum('admin', 'user', 'veterinary', 'protector', name="role"))
+    role = db.Column(db.Enum('Admin', 'User', 'Veterinary', 'Protector', name="role_enum"))
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     
     def __repr__(self):
@@ -25,6 +25,7 @@ class Users(db.Model):
 
     def serialize(self):
         return {'id': self.id,
+                'user_name': self.user_name,
                 'email': self.email,
                 'phone_number': self.phone_number,
                 'address': self.address,
@@ -141,4 +142,45 @@ class Donations(db.Model):
             'donor_name': self.donor_name if self.is_public else "Anonymous",
             'donor_amount': self.donor_amount,
             'donation_date': self.donation_date}
+    
+
+class AnimalShelter(db.Model):
+    __tablename__= "animalshelter"
+    id = db.Column(db.Integer, primary_key=True)
+    shelter_name = db.Column(db.String)
+    address = db.Column(db.String)
+    phone_number = db.Column(db.Integer)
+    city = db.Column(db.String)
+    email = db.Column(db.String)
+    web_url = db.Column(db.String)
+
+    def serialize(self):
+        return{
+            'shelter_name': self.shelter_name,
+            'address': self.address,
+            'phone_number': self.phone_number,
+            'city': self.city,
+            'email': self.email,
+            'web_url': self.web_url}
+
+    
+
+class Veterinary(db.Model):
+    __tablename__="veterinary"
+    id = db.Column(db.Integer, primary_key=True)
+    veterinary_name = db.Column(db.String)
+    address = db.Column(db.String)
+    phone_number = db.Column(db.Integer)
+    city = db.Column(db.String)
+    email = db.Column(db.String)
+    web_url = db.Column(db.String)
+
+    def serialize(self):
+        return{
+            'veterinary_name': self.veterinary_name,
+            'address': self.address,
+            'phone_number': self.phone_number,
+            'city': self.city,
+            'email': self.email,
+            'web_url': self.web_url}
     
