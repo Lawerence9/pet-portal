@@ -1,3 +1,5 @@
+import { Navigate } from "react-router-dom";
+
 const getState = ({ getStore, getActions, setStore }) => {
 
 	const host = process.env.BACKEND_URL;
@@ -9,7 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			selectedCategory: "",
 			user_id: '1',
 			sos_id: '',
-			user: 'hector',
+			user: {},
 			password: 'password',
 			notice:{},
 			animalShelter:{},
@@ -57,36 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			getAllElements: async (event) => {
-
-				event.preventDefault();
-
-
-				const store = getStore();
-				const actions = getActions();
-
-
-
-
-				const uri = `${host}/${store.selectedCategory}`;
-
-				
-				const options = {
-					method: 'GET'
-				}
-
-				const response = await fetch(uri, options);
-
-				if (!response.ok) {
-
-					return
-				}
-
-				const data = await response.json();
-				setStore({ elements: data.results });
-
-			},
-
+			
 			login: async (dataToSend) => {
 				
 				const uri = `${host}/api/login`;
@@ -107,7 +80,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json();
 				// sessionStorage.setItem("token", data.access_token);
 				setStore({
-					user: data.result.first_name,
+					user: data.results,
 					isLogged: true,
 					alert: {text: data.message, visible: true, background: 'success'}
 			})
@@ -132,7 +105,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 				actions.setAlert(message);
-
+				
 
 			},
 
@@ -167,11 +140,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 				const data = await response.json();
+				setStore({user: data.results});
+				setStore({isLogged: "true"});
+				Navigate("/home");
 
 
 			},
 			createNotice: async (notice) => {
-
 
 				const store = getStore(); // Use getStore(); to use "store" datas. 
 
@@ -200,10 +175,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				if (!response.ok) {
 
+					console.log("ERROR")
 					return
 				}
 
-				const data = await response.json();
+				
+		 	const data = await response.json();
+			console.log("data");
+			//	setStore({notice: data.results});
+
+			//	Navigate("/news");
 
 
 			},
@@ -248,7 +229,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 				const data = await response.json();
-
+				Navigate("/adoptions");
+			//	setStore({adoption: data.results});
 
 			},
 
@@ -285,6 +267,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 				const data = await response.json();
+			//	setStore({donation: data.results});
+			Navigate("/donations");
 
 
 			},
@@ -326,6 +310,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 				const data = await response.json();
+				Navigate("/sos-cases");
+			// 	setStore({sosCase: data.results});
 
 
 			},
@@ -338,16 +324,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//////////////////////////// GET FUNCTIONS  /////////////////////////////////////////////////////////  
 
-				getUser: async (event) => {
+				getUser: async (user) => {
 
-					if (event) event.preventDefault();
+				//	if (event) event.preventDefault();
 	
 	
-					const store = getStore();
-					const actions = getActions();
+				//	const store = getStore();
+				//	const actions = getActions();
 	
 	
-					const uri = `${host}/${store.user.id}`;
+					const uri = `${host}/${user.id}`;
 	
 					const options = {
 						method: 'GET'
@@ -365,22 +351,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
+					setStore({user: data.results});
+					setStore({isLogged: "true"});
+				
 					
 	
 				},
 				
 
-				getNotice: async (event) => {
+				getNotice: async (notice) => {
 
-					if (event) event.preventDefault();
-	
-	
-					const store = getStore();
-					const actions = getActions();
-	
-	
-					const uri = `${host}/api/news/${store.notice.id}`;
-	
+				
+				//	const store = getStore();
+				//	const actions = getActions();
+				let uri = "";
+
+				if (notice == "all"){
+
+					 uri = `${host}/api/news}`;
+					
+
+				} else { 
+					 uri = `${host}/api/news/${notice.id}`;
+					
+				}
+
+				
 					const options = {
 						method: 'GET'
 					}
@@ -397,6 +393,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
+					setStore({notice: data.results});
+					console.log(data.results);
 					
 	
 				},
@@ -429,20 +427,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
+					setStore({animalShelter: data.results});
 				
 	
 				},
 
-				getAdoptions: async (event) => {
+				getAdoptions: async (adoptions) => {
 
-					if (event) event.preventDefault();
-	
-	
+					
 					const store = getStore();
 					const actions = getActions();
+
+					if (adoptions == "all"){
+
+						const uri = `${host}/api/adoptions}`;
+
+					} else { 
+						const uri = `${host}/api/adoptions/${adoptions.id}`;
+					}
 	
-	
-					const uri = `${host}/api/adoptions/${store.adoptions.id}`;
+		
 	
 					const options = {
 						method: 'GET'
@@ -460,6 +464,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
+					setStore({adoptions: data.results});
 				
 	
 				},
@@ -491,6 +496,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
+					setStore({sosCase: data.results});
 				
 	
 				},
@@ -522,6 +528,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
+					setStore({veterinary: data.results});
 				
 	
 				},
@@ -553,6 +560,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
+					setStore({donation: data.results});
 				
 	
 				},
