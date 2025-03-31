@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
 	const { store, actions } = useContext(Context);
+
 	const navigate = useNavigate();
 
 	const [user, setUser] = useState("");
@@ -24,6 +25,7 @@ export const Login = () => {
 			setError("Incorrect username, password or email");
 		}
 	};
+
 
 	return (
 		<div className="container d-flex justify-content-center">
