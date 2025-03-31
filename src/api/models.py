@@ -50,15 +50,14 @@ class News(db.Model):
  
 
     def serialize(self):
-        return {
-            'id': self.id,
-            'title': self.title,
-            'body': self.body,
-            'is_active': self.is_active,
-            'created_at': self.created_at,
-            'importance_level': self.importance_level,
-            'img_url': self.img_url,
-            'user_id': self.user_id}
+        return {'id': self.id,
+                'title': self.title,
+                'body': self.body,
+                'is_active': self.is_active,
+                'created_at': self.created_at,
+                'importance_level': self.importance_level,
+                'img_url': self.img_url,
+                'user_id': self.user_id}
 
 
 class Adoptions(db.Model):
@@ -80,20 +79,19 @@ class Adoptions(db.Model):
 
 
    def serialize(self):
-        return {
-            'id': self.id,
-            'status': self.status,
-            'is_active': self.is_active,
-            'how_old': self.how_old,
-            'specie': self.specie,
-            'race': self.race,
-            'sex': self.sex,
-            'unadopted_time': self.unadopted_time,
-            'province': self.province,
-            'description': self.description,
-            'img_url': self.img_url,
-            'adoption_priority': self.adoption_priority,
-            'user_id': self.user_id}
+        return {'id': self.id,
+                'status': self.status,
+                'is_active': self.is_active,
+                'how_old': self.how_old,
+                'specie': self.specie,
+                'race': self.race,
+                'sex': self.sex,
+                'unadopted_time': self.unadopted_time,
+                'province': self.province,
+                'description': self.description,
+                'img_url': self.img_url,
+                'adoption_priority': self.adoption_priority,
+                'user_id': self.user_id}
 
 
 class SosCases(db.Model):
@@ -112,17 +110,16 @@ class SosCases(db.Model):
 
 
     def serialize(self):
-        return {
-            'id': self.id,
-            'img_url': self.img_url,
-            'province': self.province,
-            'specie': self.specie,
-            'description': self.description,
-            'status': self.status,
-            'operation_cost': self.operation_cost,
-            'pending_amount': self.pending_amount,
-            'is_active': self.is_active,
-            'user_id': self.user_id}
+        return {'id': self.id,
+                'img_url': self.img_url,
+                'province': self.province,
+                'specie': self.specie,
+                'description': self.description,
+                'status': self.status,
+                'operation_cost': self.operation_cost,
+                'pending_amount': self.pending_amount,
+                'is_active': self.is_active,
+                'user_id': self.user_id}
 
 
 class Donations(db.Model):
@@ -137,11 +134,11 @@ class Donations(db.Model):
 
 
     def serialize(self):
-        return {
-            'sos_id': self.sos_id,
-            'donor_name': self.donor_name if self.is_public else "Anonymous",
-            'donor_amount': self.donor_amount,
-            'donation_date': self.donation_date}
+        return {'id': self.id,
+                'donor_name': self.donor_name if self.is_public else "Anonymous",
+                'donor_amount': self.donor_amount,
+                'donation_date': self.donation_date,
+                'sos_id': self.sos_id}
     
 
 class AnimalShelter(db.Model):
@@ -155,18 +152,16 @@ class AnimalShelter(db.Model):
     web_url = db.Column(db.String)
 
     def serialize(self):
-        return{
-            'shelter_name': self.shelter_name,
-            'address': self.address,
-            'phone_number': self.phone_number,
-            'city': self.city,
-            'email': self.email,
-            'web_url': self.web_url}
+        return {'shelter_name': self.shelter_name,
+                'address': self.address,
+                'phone_number': self.phone_number,
+                'city': self.city,
+                'email': self.email,
+                'web_url': self.web_url}
 
-    
 
 class Veterinary(db.Model):
-    __tablename__="veterinary"
+    __tablename__= "veterinary"
     id = db.Column(db.Integer, primary_key=True)
     veterinary_name = db.Column(db.String)
     address = db.Column(db.String)
@@ -176,11 +171,10 @@ class Veterinary(db.Model):
     web_url = db.Column(db.String)
 
     def serialize(self):
-        return{
-            'veterinary_name': self.veterinary_name,
-            'address': self.address,
-            'phone_number': self.phone_number,
-            'city': self.city,
-            'email': self.email,
-            'web_url': self.web_url}
+        return{'veterinary_name': self.veterinary_name,
+               'address': self.address,
+               'phone_number': self.phone_number,
+               'city': self.city,
+               'email': self.email,
+               'web_url': self.web_url}
     

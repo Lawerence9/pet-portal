@@ -95,25 +95,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: {
 						"Content-Type": "application/json"
 					},
-					body: JSON.stringify({ dataToSend })
+					body: JSON.stringify(dataToSend)
 				};
 			
 				const response = await fetch(uri, options);
 				if (!response.ok) {
 					console.log("Error", response.status, response.statusText);
-					return false;
+					return false
 				}
 			
 				const data = await response.json();
 				// sessionStorage.setItem("token", data.access_token);
 				setStore({
-					user: data.result.first_name,
-					isLogged: true,
-					alert: {text: data.message, visible: true, background: 'success'}
-			})
+					user: data.results.user_name,
+					isLogged: true
+				})
 				localStorage.setItem("token", data.access_token);
-				return true;
-
+				localStorage.setItem('user', JSON.stringify(data))
+				return true
 			},
 			
 			logout: async (event) => {

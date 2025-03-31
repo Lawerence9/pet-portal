@@ -24,7 +24,7 @@ def handle_hello():
 
 @api.route("/users", methods=["GET"])
 def users():
-    response_body ={}
+    response_body = {}
     if request.method == "GET":
         rows = db.session.execute(db.select(Users)).scalars()
         results = [row.serialize() for row in rows]
@@ -41,39 +41,38 @@ def user(user_id):
         response_body["message"] = "User not found"
         return response_body, 404
     if request.method == "GET":
-        results = row.serialize()
-        response_body["message"] = F"Data of user {user_id} obtained"
-        response_body["results"] = results
+        response_body["message"] = F"Data of user {user_id} retrieved"
+        response_body["results"] = row.serialize()
         return response_body, 200
     if request.method == "PUT":
         data = request.json
-        row = db.session.execute(db.select(Users).where(Users.id == user_id)).scalar()
-        row.email= data.get("email", row.email)
+        row.email = data.get("email", row.email)
+        row.user_name = data.get("user_name", row.user_name)
         db.session.commit()
-        response_body["results"] = row.serialize()
         response_body["message"] = F"Data of user {user_id} changed successfully"
+        response_body["results"] = row.serialize()
         return response_body, 200
     if request.method == "DELETE":
         # db.session.delete(row)
         row.is_active = False
         db.session.commit()
-        response_body["message"] = F"User {user_id} deleted"
+        response_body["message"] = F"User {user_id} deleted successfully"
         return response_body, 200
 
 
 @api.route("/sign-up", methods=["POST"])
 def sign_up():
-        response_body={}
+        response_body = {}
         data = request.json
         existing_user = Users.query.filter_by(user_name=data.get("user_name")).first()
         if existing_user:
             response_body["message"]= "User name already taken"
             return response_body, 400
-        new_user = Users(user_name= data.get("user_name"),
-                         email=data.get("email"),
-                         password=data.get("password"),
-                         role=data.get("role", "User"),
-                         is_active=True)
+        new_user = Users(user_name = data.get("user_name"),
+                         email = data.get("email"),
+                         password = data.get("password"),
+                         role = data.get("role", "User"),
+                         is_active = True)
         db.session.add(new_user)
         db.session.commit()
         response_body["message"] = "User created correctly"
@@ -84,7 +83,7 @@ def sign_up():
 
 @api.route("/login", methods=["POST"])
 def login():
-    response_body={}
+    response_body = {}
     data = request.json
     email = data.get("email", None)
     password = data.get("password", None)
@@ -94,26 +93,12 @@ def login():
         return response_body, 400
     user = row.serialize()
     claims = {"user_id": user["id"],
-              "is_admin": user["is_admin"],
               "role": user["role"]}
     access_token = create_access_token(identity=email, additional_claims=claims)
     response_body["message"] = "User logged in"
     response_body["results"] = user
     response_body["access_token"] = access_token
     return response_body, 200
-
-
-# Protect a route with jwt_required, which will kick out requests
-# without a valid JWT present.
-"""@api.route("/protected", methods=["GET"])
-@jwt_required()
-def protected():
-    # Access the identity of the current user with get_jwt_identity
-    response_body ={}
-    current_user = get_jwt_identity()
-    additional_claims = get_jwt()
-    response_body["message"]= f"User logged: {current_user}"
-    return response_body, 200"""
 
 
 @api.route("/news", methods=["GET"])
@@ -132,16 +117,16 @@ def news():
 def news_post():
     response_body = {}
     additional_claims = get_jwt()
-    if additional_claims["role"] is not "Protector":
-        response_body["message"] = "You don't have permission to post"
+    if additional_claims["role"] != "Protector":
+        response_body["message"] = "You don't have permission to post news"
         return response_body, 400
     if request.method == "POST":
         data = request.json
         new_news = News(title = data.get("title"),
                         body = data.get("body"),
                         img_url = data.get("img_url"),
-                        created_at= data.get("created_at"),
-                        importance_level= data.get("importance_level"),
+                        created_at = data.get("created_at"),
+                        importance_level = data.get("importance_level"),
                         user_id = additional_claims["user_id"])
         db.session.add(new_news)
         db.session.commit()
@@ -153,11 +138,10 @@ def news_post():
 @api.route("/news/<int:news_id>", methods=["GET"])
 def new_get(news_id):
     response_body = {}
-    row = db.session.execute(db.select(News).where(News.id == news_id)).scalar()
     if request.method == "GET":
-        results = row.serialize()
+        row = db.session.execute(db.select(News).where(News.id == news_id)).scalar()
         response_body["message"] = "News data successfully retieved"
-        response_body["results"] = results
+        response_body["results"] = row.serialize()
         return response_body, 200
 
 
@@ -171,7 +155,7 @@ def new(news_id):
         return response_body, 400
     additional_claims = get_jwt()
     user_id = additional_claims(["user_id"])
-    if user_id is not row.user_id:
+    if user_id != row.user_id:
         response_body["message"] = "Access denied"
         return response_body, 400
     if request.method == "PUT":
@@ -183,14 +167,14 @@ def new(news_id):
         row.importance_level = data.get("importance_level", row.importance_level)
         row.img_url = data.get("img_url", row.img_url)
         db.session.commit()
-        response_body["results"] = row.serialize()
         response_body["message"] = "News updated successfully"
+        response_body["results"] = row.serialize()
         return response_body, 200
     if request.method =="DELETE":
         db.session.delete(row)
         db.session.commit()
         response_body["message"] = "News deleted successfully"
-        response_body["results"] ={}
+        response_body["results"] = {}
         return response_body, 200
 
 
@@ -208,24 +192,25 @@ def get_adoptions():
 @api.route("/adoptions", methods=["POST"])
 @jwt_required()
 def adoptions():
-    response_body= {}
+    response_body = {}
     additional_claims = get_jwt()
-    if additional_claims["role"] is not "Protector":
+    if additional_claims["role"] != "Protector":
         response_body["message"] = "You don't have permission to post"
         return response_body, 400
     if request.method == "POST":
         data = request.json
-        new_adoption = Adoptions(status=data.get("status"),
-                                 is_active=True,
-                                 how_old= data.get("how_old"),
-                                 specie= data.get("specie"),
-                                 race= data.get("race"),
-                                 sex= data.get("sex"),
-                                 unadopted_time= data.get("unadopted_time"),
-                                 province= data.get("province"),
-                                 description=data.get("description"),
-                                 img_url=data.get("img_url"),
-                                 adoption_priority=data.get("adoption_priority"))
+        new_adoption = Adoptions(status = data.get("status"),
+                                 is_active = True,
+                                 how_old = data.get("how_old"),
+                                 specie = data.get("specie"),
+                                 race = data.get("race"),
+                                 sex = data.get("sex"),
+                                 unadopted_time = data.get("unadopted_time"),
+                                 province = data.get("province"),
+                                 description = data.get("description"),
+                                 img_url = data.get("img_url"),
+                                 adoption_priority = data.get("adoption_priority"),
+                                 user_id = additional_claims["user_id"])
         db.session.add(new_adoption)
         db.session.commit()
         response_body["message"] = "Adoption posted successfully"
@@ -235,22 +220,24 @@ def adoptions():
 @api.route("/adoptions/<int:adoption_id>", methods=["GET"])
 def get_adoption(adoption_id):
     response_body = {}
-    rows = db.session.execute(db.select(Adoptions).where(Adoptions.id == adoption_id)).scalar()
     if request.method == "GET":
-        results = [row.serialize() for row in rows]
+        row = db.session.execute(db.select(Adoptions).where(Adoptions.id == adoption_id)).scalar()
         response_body["message"] = "Adoption posted successfully"
-        response_body["results"] = results
+        response_body["results"] = row.serialize()
         return response_body, 200
     
 
 @api.route("/adoptions/<int:adoption_id>", methods=["PUT", "DELETE"])
 @jwt_required()
 def adoption(adoption_id):
-    response_body ={}
+    response_body = {}
     row = db.session.execute(db.select(Adoptions).where(Adoptions.id == adoption_id)).scalar()
     additional_claims = get_jwt()    
-    if additional_claims["role"] is not "Protector":
+    if additional_claims["role"] != "Protector":
         response_body["message"] = "You don't have permission"
+        return response_body, 400
+    if row is None:
+        response_body["message"] = "Adoption data not found"
         return response_body, 400
     if request.method == "PUT":
         data = request.json
@@ -266,8 +253,8 @@ def adoption(adoption_id):
         row.img_url = data.get("img_url", row.img_url)
         row.adption_priority = data.get("adoption_priority", row.adoption_priority)
         db.session.commit()
-        response_body["results"] = row.serialize()
         response_body["message"] = "Adoption updated successfully"
+        response_body["results"] = row.serialize()
         return response_body, 200
     if request.method == "DELETE":
         db.session.delete(row)
@@ -291,21 +278,22 @@ def get_sos_cases():
 @api.route("/sos-cases", methods=["POST"])
 @jwt_required()
 def sos_cases():
-    response_body={}
+    response_body = {}
     additional_claims = get_jwt()
-    if additional_claims["role"] is not "Protector":
-        response_body["message"] = "You don't hace permission"
+    if additional_claims["role"] != "Protector":
+        response_body["message"] = "You don't have permission"
         return response_body, 400
     if request.method == "POST":
         data = request.json
-        new_sos_case = SosCases(img_url =data.get("img_url"),
+        new_sos_case = SosCases(img_url = data.get("img_url"),
                                 province = data.get("province"),
-                                specie=data.get("specie"),
-                                description=data.get("description"),
-                                status=data.get("status"),
-                                operation_cost=data.get("operation_cost"),
-                                pending_amount=data.get("pending_amount"),
-                                is_active=data.get("is_active"))
+                                specie = data.get("specie"),
+                                description = data.get("description"),
+                                status = data.get("status"),
+                                operation_cost = data.get("operation_cost"),
+                                pending_amount = data.get("pending_amount"),
+                                is_active = data.get("is_active"),
+                                user_id = additional_claims["user_id"])
         db.session.add(new_sos_case)
         db.session.commit()
         response_body["message"] = "Sos case posted successfully"
@@ -315,28 +303,38 @@ def sos_cases():
 @api.route("/sos-cases/<int:case_id>", methods=["GET"])
 def get_sos_case(case_id):
     response_body = {}
-    rows = db.session.execute(db.select(SosCases).where(SosCases.id == case_id)).scalars()
     if request.method == "GET":
-        results = [row.serialize() for row in rows]
+        row = db.session.execute(db.select(SosCases).where(SosCases.id == case_id)).scalar()
         response_body["message"] = "Sos case data retrieved successfully"
-        response_body["results"] = results
+        response_body["results"] = row.serialize()
         return response_body, 200
     
 
 @api.route("/sos-cases/<int:case_id>", methods=["PUT", "DELETE"])
 @jwt_required()
 def sos_case(case_id):
-    response_body={}
+    response_body = {}
     row = db.session.execute(db.select(SosCases).where(SosCases.id) == case_id).scalar()
+    additional_claims = get_jwt()
+    if additional_claims["role"] != "Protector":
+        response_body["message"] = "You don't have permission"
+        return response_body, 400
+    if row is None:
+        response_body["message"] = "Sos case data not found"
+        return response_body, 400
     if request.method == "PUT":
         data = request.json
+        row.image_url = data.get("img_url", row.img_url)
+        row.province = data.get("province", row.province)
         row.specie = data.get("specie", row.specie)
         row.description = data.get("description", row.description)
-        row.operation_cost = data.get("operation_cost", row.operation_cost)
         row.status = data.get("status", row.status)
+        row.operation_cost = data.get("operation_cost", row.operation_cost)
+        row.pending.amount = data.get("pending_amount", row.pending.amount)
+        row.is_active = data.get("is_active", row.is_active)
         db.session.commit()
-        response_body["results"] = row.serialize()
         response_body["message"] = "Sos case updated successfully"
+        response_body["results"] = row.serialize()
         return response_body, 200
     if request.method == "DELETE":
         db.session.delete(row)
@@ -357,89 +355,38 @@ def donations():
         return response_body, 200
     if request.method == "POST":
         data = request.json
-        new_donation = Donations(donation_date= data.get("donation_date"),
+        new_donation = Donations(donation_date = data.get("donation_date"),
                                  is_public = data.get("is_public"),
-                                 donor_name=data.get("donor_name"),
-                                 donor_amount=data.get("donor_amount"))
+                                 donor_name = data.get("donor_name"),
+                                 donor_amount = data.get("donor_amount"))
         db.session.add(new_donation)
         db.session.commit()
         response_body["message"] = "Donation posted successfully"
         return response_body, 200
 
 
-@api.route("/donations/<int:donation_id>", methods=["GET","DELETE"])
+@api.route("/donations/<int:donation_id>", methods=["GET"])
 def donation(donation_id):
     response_body = {}
-    rows = db.session.execute(db.select(Donations).where(Donations.id == donation_id)).scalars()
+    row = db.session.execute(db.select(Donations).where(Donations.id == donation_id)).scalar()
     if request.method == "GET":
-        results = [row.serialize() for row in rows]
         response_body["message"] = "Donation data retireved successfully"
-        response_body["results"] = results
-        return response_body, 200
-    if request.method == "DELETE":
-        row = db.session.execute(db.select(Donations).where(Donations.id == donation_id)).scalar()
-        if row:
-            db.session.delete(row)
-            db.session.commit()
-            response_body["message"] = "Donation deleted successfully"
-            response_body["results"] = {}
-            return response_body, 200
-        else:
-            response_body["message"]= "Donation not found"
-            return response_body, 404
-
-
-@api.route("/veterinaries", methods=["GET", "POST"])
-def veterinaries():
-    response_body = {}
-    if request.method == "GET":
-        rows = db.session.execute(db.select(Veterinary)).scalars()
-        results = [row.serialize() for row in rows]
-        response_body["message"] = "Veterinaries data retrieved successfully"
-        response_body["results"] = results
-        return response_body, 200
-    if request.method == "POST":
-        data = request.json
-        new_veterinary= Veterinary(veterinary_name = data.get("veterinary_name"),
-                                   address = data.get("address"),
-                                   phone_number = data.get("phone_number"),
-                                   city = data.get("city"),
-                                   email = data.get("email"),
-                                   web_url = data.get("web_url"))
-        db.session.add(new_veterinary)
-        db.session.commit()
-        response_body["message"] = "Veterinary data added successfully"
+        response_body["results"] = row.serialize()
         return response_body, 200
     
-
-@api.route("/veterinaries/<int:veterinary_id>", methods=["GET","PUT","DELETE"])
-def veterinary(veterinary_id):
-    response_body= {}
-    rows = db.session.execute(db.select(Veterinary).where(Veterinary.id == veterinary_id)).scalars()
-    row = db.session.execute(db.select(Veterinary).where(Veterinary.id == veterinary_id)).scalar()
-    if request.method == "GET":
-        results = [row.serialize() for row in rows]
-        response_body["message"] = "Veterinary data retrieved successfully"
-        response_body["results"] = results
-        return response_body, 200
-    if request.method == "PUT":
-        data = request.json
-        row.veterinary_name = data.get("veterinary_name", row.veterinary_name),
-        row.address = data.get("address", row.address),
-        row.phone_number = data.get("phone_number", row.phone_number),
-        row.city = ("city", row.city),
-        row.email = ("email", row.email),
-        row.web_url = ("web_url", row.web_url)
-        db.session.commit()
-        response_body["message"] = "Veterinary data updated successfully"
-        return response_body, 200
+"""@api.route("/donations/<int:donation_id>", methods=["DELETE"])
+def donation(donation_id):
+    response_body = {}
+    row = db.session.execute(db.select(Donations).where(Donations.id == donation_id)).scalar()
+    if row == None:
+        response_body["message"] = "Donation not found"
+        return response_body, 404
     if request.method == "DELETE":
-        if row:
-            db.session.delete(row)
-            db.session.commit()
-            response_body["message"] = "Veterinary deleted successfully"
-            response_body["results"] = {}
-            return response_body, 200
+        db.session.delete(row)
+        db.session.commit()
+        response_body["message"] = "Donation deleted successfully"
+        response_body["results"] = {}
+        return response_body, 200"""
 
 
 @api.route("/animal-shelters", methods=["GET", "POST"])
@@ -453,27 +400,81 @@ def animal_shelters():
         return response_body, 200
     if request.method == "POST":
         data = request.json
-        new_veterinary= AnimalShelter(shelter_name = data.get("shelter_name"),
-                                      address = data.get("address"),
-                                      phone_number = data.get("phone_number"),
-                                      city = data.get("city"),
-                                      email = data.get("email"),
-                                      web_url = data.get("web_url"))
+        new_shelter = AnimalShelter(shelter_name = data.get("shelter_name"),
+                                    address = data.get("address"),
+                                    phone_number = data.get("phone_number"),
+                                    city = data.get("city"),
+                                    email = data.get("email"),
+                                    web_url = data.get("web_url"))
+        db.session.add(new_shelter)
+        db.session.commit()
+        response_body["message"] = "Shelter data added successfully"
+        return response_body, 200
+    
+
+@api.route("/animal-shelters/<int:shelter_id>", methods=["GET", "PUT", "DELETE"])
+def animal_shelter(shelter_id):
+    response_body= {}
+    row = db.session.execute(db.select(AnimalShelter).where(AnimalShelter.id == shelter_id)).scalar()
+    if row is None:
+        response_body["message"] = "Shelter not found"
+        return response_body, 400
+    if request.method == "GET":
+        response_body["message"] = "Animal shelter data retrieved successfully"
+        response_body["results"] = row.serialize()
+        return response_body, 200
+    if request.method == "PUT":
+        data = request.json
+        row.shelter_name = data.get("shelter_name", row.shelter_name),
+        row.address = data.get("address", row.address),
+        row.phone_number = data.get("phone_number", row.phone_number),
+        row.city = ("city", row.city),
+        row.email = ("email", row.email),
+        row.web_url = ("web_url", row.web_url)
+        db.session.commit()
+        response_body["message"] = "Shelter data updated successfully"
+        return response_body, 200
+    if request.method == "DELETE":
+        db.session.delete(row)
+        db.session.commit()
+        response_body["message"] = "Shelter deleted successfully"
+        response_body["results"] = {}
+        return response_body, 200
+
+
+@api.route("/veterinaries", methods=["GET", "POST"])
+def veterinaries():
+    response_body = {}
+    if request.method == "GET":
+        rows = db.session.execute(db.select(Veterinary)).scalars()
+        results = [row.serialize() for row in rows]
+        response_body["message"] = "Veterinaries data retrieved successfully"
+        response_body["results"] = results
+        return response_body, 200
+    if request.method == "POST":
+        data = request.json
+        new_veterinary = Veterinary(veterinary_name = data.get("veterinary_name"),
+                                    address = data.get("address"),
+                                    phone_number = data.get("phone_number"),
+                                    city = data.get("city"),
+                                    email = data.get("email"),
+                                    web_url = data.get("web_url"))
         db.session.add(new_veterinary)
         db.session.commit()
         response_body["message"] = "Veterinary data added successfully"
         return response_body, 200
     
 
-@api.route("/animal-shelters/<int:veterinary_id>", methods=["GET","PUT","DELETE"])
-def animal_shelter(shelter_id):
-    response_body= {}
-    rows = db.session.execute(db.select(AnimalShelter).where(AnimalShelter.id == shelter_id)).scalars()
-    row = db.session.execute(db.select(AnimalShelter).where(AnimalShelter.id == shelter_id)).scalar()
+@api.route("/veterinaries/<int:veterinary_id>", methods=["GET", "PUT", "DELETE"])
+def veterinary(veterinary_id):
+    response_body = {}
+    row = db.session.execute(db.select(Veterinary).where(Veterinary.id == veterinary_id)).scalar()
+    if row is None:
+        response_body["message"] = "Veterinary not found"
+        return response_body, 400
     if request.method == "GET":
-        results = [row.serialize() for row in rows]
-        response_body["message"] = "Animal shelter data retrieved successfully"
-        response_body["results"] = results
+        response_body["message"] = "Veterinary data retrieved successfully"
+        response_body["results"] = row.serialize()
         return response_body, 200
     if request.method == "PUT":
         data = request.json
@@ -484,12 +485,11 @@ def animal_shelter(shelter_id):
         row.email = ("email", row.email),
         row.web_url = ("web_url", row.web_url)
         db.session.commit()
-        response_body["message"] = "Shelter data updated successfully"
+        response_body["message"] = "Veterinary data updated successfully"
         return response_body, 200
     if request.method == "DELETE":
-        if row:
-            db.session.delete(row)
-            db.session.commit()
-            response_body["message"] = "Shelter deleted successfully"
-            response_body["results"] = {}
-            return response_body, 200
+        db.session.delete(row)
+        db.session.commit()
+        response_body["message"] = "Veterinary deleted successfully"
+        response_body["results"] = {}
+        return response_body, 200
