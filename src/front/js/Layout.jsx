@@ -19,6 +19,10 @@ import { SosAnimal } from "./pages/SosAnimal.jsx";
 import { Tiendas } from "./pages/Tiendas.jsx";
 import { Veterinarias } from "./pages/Veterinarias.jsx";
 import { VistaDetalles } from "./pages/VistaDetalles.jsx";
+import { ListadoNoticias } from "./pages/ListadoNoticias.jsx";
+import { CrearNoticia } from "./pages/CrearNoticia.jsx";
+import { DetalleNoticia } from "./pages/DetalleNoticia.jsx"
+
 
 const basename = process.env.BASENAME || "";
 
@@ -43,6 +47,9 @@ const Layout = () => {
                         <Route element={<Donaciones />} path="/donaciones" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Noticias />} path="/noticias" />
+                        <Route element={<ListadoNoticias />} path="/listado-noticias" />
+                        <Route element={<CrearNoticia/>} path="/crear-noticia" />
+                        <Route element={<DetalleNoticia />} path="/detalle-noticia" />
                         <Route element={<Protectoras />} path="/Protectoras" />
                         <Route element={<SitiosInteres />} path="/sitios-interes" />
                         <Route element={<SosAnimal />} path="/sos-animal" /> 

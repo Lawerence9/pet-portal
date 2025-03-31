@@ -35,7 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			setUser: (newUser) => { setStore({ user: newUser }) },
-			setNotice: (newNotice) => { setStore({ unotice: newNotice }) },
+			setNotice: (newNotice) => { setStore({ notice: newNotice }) },
 			setAnimalShelter: (newAnimalShelter) => { setStore({ animalShelter: newAnimalShelter }) },
 			setAdoption: (newAdoption) => { setStore({ adoptions: newAdoption }) },
 			setVeterinary: (newVeterinary) => { setStore({ veterinary: newVeterinary }) },
@@ -148,27 +148,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			createNotice: async (notice) => {
 
-				const store = getStore(); // Use getStore(); to use "store" datas. 
-
-				const uri = `${host}/api/news`;
+				const store = getStore();
+                const uri = `${host}/api/news`;
 				const dataToSend = {
 					user_id: store.user_id,
 					title: notice.title,
 					body: notice.body,
 					status: notice.status,
-					created_at: notice.created_at,
+					created_at: notice.created_at ?? new Date().toISOString(),
 					importance_level: notice.importance_level,
 					img_url: notice.img_url
 				}
 
 				const options = {
 					method: 'POST',
-					headers: {
-						"Content-Type": "application/json"
-					},
-
-					body: JSON.stringify(dataToSend)							
-				}
+					headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(dataToSend)							
+				};
 				
 
 				const response = await fetch(uri, options);
@@ -177,17 +173,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					console.log("ERROR")
 					return
-				}
+				};
 
 				
 		 	const data = await response.json();
-			console.log("data");
-			//	setStore({notice: data.results});
-
-			//	Navigate("/news");
-
-
+			console.log("Noticia creada con éxito:", data);
+			setStore({ notice: data.results });
+            return true;
+			
 			},
+
 
 			createAdoption: async (adoption) => {
 
