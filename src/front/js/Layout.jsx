@@ -19,6 +19,12 @@ import { SosAnimal } from "./pages/SosAnimal.jsx";
 import { Tiendas } from "./pages/Tiendas.jsx";
 import { Veterinarias } from "./pages/Veterinarias.jsx";
 import { VistaDetalles } from "./pages/VistaDetalles.jsx";
+import { ListadoNoticias } from "./pages/ListadoNoticias.jsx";
+import { CrearNoticia } from "./pages/CrearNoticia.jsx";
+import { DetalleNoticia } from "./pages/DetalleNoticia.jsx"
+import { ProtectorasVistaDetalle } from "./pages/ProtectorasVistaDetalle.jsx"
+
+
 import { SignUp } from "./pages/SignUp.jsx";
 
 const basename = process.env.BASENAME || "";
@@ -45,12 +51,16 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignUp/>} path="/sign-up" />
                         <Route element={<Noticias />} path="/noticias" />
+                        <Route element={<ListadoNoticias />} path="/listado-noticias" />
+                        <Route element={<CrearNoticia/>} path="/crear-noticia" />
+                        <Route element={<DetalleNoticia />} path="/detalle-noticia" />
                         <Route element={<Protectoras />} path="/Protectoras" />
                         <Route element={<SitiosInteres />} path="/sitios-interes" />
                         <Route element={<SosAnimal />} path="/sos-animal" /> 
                         <Route element={<Tiendas />} path="/Tiendas" />
                         <Route element={<Veterinarias />} path="/veterinarias" />
                         <Route element={<VistaDetalles />} path="/vista-detalles" />
+                        <Route element={<ProtectorasVistaDetalle />} path="/animal-shelter-detail" />
                       
                     </Routes>
                     <Footer />
