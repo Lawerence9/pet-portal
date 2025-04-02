@@ -1,26 +1,31 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation, Navigate  } from "react-router-dom";
 
 export const Protectoras = () => {
 	const { store, actions } = useContext(Context);
 
+	const loc = useLocation();
+	
+
 	const listarAnimalShelters = () => {
 
 		actions.getAnimalShelter("all");
+	
+	
 	//	console.log(store.Protectoras)
 	
  
 	  }
 
-	//  actions.getAnimalShelter("all");
+	 //  actions.getAnimalShelter("all");
 
 	useEffect(() => {
 		//   getTodos();
 		listarAnimalShelters("all")
-	//	console.log(store.Protectoras)
-	  
-	   }, []);
+		console.log("use effect");
+		
+	   }, [loc]);
 	
 
 	return (

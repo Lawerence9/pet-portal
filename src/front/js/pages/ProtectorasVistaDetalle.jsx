@@ -10,7 +10,6 @@ export const ProtectorasVistaDetalle = () => {
 		const a = actions.getAnimalShelter(1);
 		
 	
-	
  
 	  }
 
