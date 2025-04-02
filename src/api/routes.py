@@ -71,7 +71,7 @@ def sign_up():
         new_user = Users(user_name = data.get("user_name"),
                          email = data.get("email"),
                          password = data.get("password"),
-                         role = data.get("role", "User"),
+                         role = data.get("role", "Protector"),
                          is_active = True)
         db.session.add(new_user)
         db.session.commit()
