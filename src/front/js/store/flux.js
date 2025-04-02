@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 	const host = process.env.BACKEND_URL;
 
+
 	return {
 		store: {
 			message: null,
@@ -13,13 +14,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			sos_id: '',
 			user: {},
 			password: 'password',
-			notice:{},
-			animalShelter:{},
-			adoptions: {},
-			veterinary:{},
-			sosCase: {},
+			notice:[],
+			animalShelter:[],
+			adoptions: [],
+			veterinary:[],
+			sosCase: [],
 			//host: "https://playground.4geeks.com",
 			selectedElement: {},
+		
 			
 		},
 		actions: {
@@ -395,17 +397,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 	
 				},
 
-				getAnimalShelter: async (event) => {
-
-					if (event) event.preventDefault();
-	
+				getAnimalShelter: async (shelter) => {
+						
 	
 					const store = getStore();
 					const actions = getActions();
+					// const h = `https://curly-happiness-p9q77xgvq5736vr5-3001.app.github.dev`
+
+					// const uri = `${host}/api/animal-shelters`;;
+					//uri = `${host}/api/animal-shelters`;
+					let uri = "";
+						
 	
-	
-					const uri = `${host}/api/animal-shelter/${store.AnimalShelter.id}`;
+					if (shelter == "all"){
+
+						uri = `${host}/api/animal-shelters`;
 					
+   
+				   } else { 
+						uri = `${host}/api/animal-shelters/${shelter}`;
+						
+					   
+				   }
+   
+						
 	
 					const options = {
 						method: 'GET'
@@ -424,6 +439,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	
 					const data = await response.json();
 					setStore({animalShelter: data.results});
+					console.log(data.results);
 				
 	
 				},
