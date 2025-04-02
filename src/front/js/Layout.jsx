@@ -22,6 +22,8 @@ import { VistaDetalles } from "./pages/VistaDetalles.jsx";
 import { ListadoNoticias } from "./pages/ListadoNoticias.jsx";
 import { CrearNoticia } from "./pages/CrearNoticia.jsx";
 import { DetalleNoticia } from "./pages/DetalleNoticia.jsx"
+import { ProtectorasVistaDetalle } from "./pages/ProtectorasVistaDetalle.jsx"
+
 
 
 const basename = process.env.BASENAME || "";
@@ -56,6 +58,7 @@ const Layout = () => {
                         <Route element={<Tiendas />} path="/Tiendas" />
                         <Route element={<Veterinarias />} path="/veterinarias" />
                         <Route element={<VistaDetalles />} path="/vista-detalles" />
+                        <Route element={<ProtectorasVistaDetalle />} path="/animal-shelter-detail" />
                       
                     </Routes>
                     <Footer />
