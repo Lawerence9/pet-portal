@@ -450,12 +450,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const store = getStore();
 					const actions = getActions();
 
+					let uri = "";
+
 					if (adoptions == "all"){
 
-						const uri = `${host}/api/adoptions}`;
+						uri = `${host}/api/adoptions}`;
 
 					} else { 
-						const uri = `${host}/api/adoptions/${adoptions.id}`;
+						uri = `${host}/api/adoptions/${adoptions}`;
 					}
 	
 		
