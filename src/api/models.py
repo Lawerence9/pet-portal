@@ -152,7 +152,8 @@ class AnimalShelter(db.Model):
     web_url = db.Column(db.String)
 
     def serialize(self):
-        return {'shelter_name': self.shelter_name,
+        return {'id': self.id,
+                'shelter_name': self.shelter_name,
                 'address': self.address,
                 'phone_number': self.phone_number,
                 'city': self.city,
@@ -171,7 +172,8 @@ class Veterinary(db.Model):
     web_url = db.Column(db.String)
 
     def serialize(self):
-        return{'veterinary_name': self.veterinary_name,
+        return{'id': self.id,
+               'veterinary_name': self.veterinary_name,
                'address': self.address,
                'phone_number': self.phone_number,
                'city': self.city,

@@ -19,6 +19,7 @@ import { SosAnimal } from "./pages/SosAnimal.jsx";
 import { Tiendas } from "./pages/Tiendas.jsx";
 import { Veterinarias } from "./pages/Veterinarias.jsx";
 import { VistaDetalles } from "./pages/VistaDetalles.jsx";
+import { SignUp } from "./pages/SignUp.jsx";
 
 const basename = process.env.BASENAME || "";
 
@@ -42,6 +43,7 @@ const Layout = () => {
                         <Route element={<Adopciones />} path="/adopciones" />
                         <Route element={<Donaciones />} path="/donaciones" />
                         <Route element={<Login />} path="/login" />
+                        <Route element={<SignUp/>} path="/sign-up" />
                         <Route element={<Noticias />} path="/noticias" />
                         <Route element={<Protectoras />} path="/Protectoras" />
                         <Route element={<SitiosInteres />} path="/sitios-interes" />
