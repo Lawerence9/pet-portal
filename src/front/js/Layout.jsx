@@ -25,6 +25,7 @@ import { DetalleNoticia } from "./pages/DetalleNoticia.jsx"
 import { ProtectorasVistaDetalle } from "./pages/ProtectorasVistaDetalle.jsx"
 
 
+import { SignUp } from "./pages/SignUp.jsx";
 
 const basename = process.env.BASENAME || "";
 
@@ -48,6 +49,7 @@ const Layout = () => {
                         <Route element={<Adopciones />} path="/adopciones" />
                         <Route element={<Donaciones />} path="/donaciones" />
                         <Route element={<Login />} path="/login" />
+                        <Route element={<SignUp/>} path="/sign-up" />
                         <Route element={<Noticias />} path="/noticias" />
                         <Route element={<ListadoNoticias />} path="/listado-noticias" />
                         <Route element={<CrearNoticia/>} path="/crear-noticia" />
