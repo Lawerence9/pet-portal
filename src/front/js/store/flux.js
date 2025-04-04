@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			isLogged: false,
+			imageRoute: "../../img/protectoras/",
 			selectedCategory: "",
 			user_id: '1',
 			sos_id: '',
@@ -16,6 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			password: 'password',
 			notice:[],
 			animalShelter:[],
+			animalShelterSelected:{},
 			adoptions: [],
 			veterinary:[],
 			sosCase: [],
@@ -181,7 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				
 		 	const data = await response.json();
 			console.log("Noticia creada con éxito:", data);
-			setStore({ notice: data.results });
+			// setStore({ notice: data.results });
             return true;
 			
 			},
@@ -392,14 +394,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 	
 					const data = await response.json();
 					setStore({notice: data.results});
-					console.log(data.results);
+				
 					
 	
 				},
 
 				getAnimalShelter: async (shelter) => {
 						
-	
+				
 					const store = getStore();
 					const actions = getActions();
 					// const h = `https://curly-happiness-p9q77xgvq5736vr5-3001.app.github.dev`
@@ -412,10 +414,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (shelter == "all"){
 
 						uri = `${host}/api/animal-shelters`;
-					
+						setStore({animalShelterSelected: ""});
    
 				   } else { 
 						uri = `${host}/api/animal-shelters/${shelter}`;
+						setStore({animalShelter: []});
 						
 					   
 				   }
@@ -438,8 +441,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
-					setStore({animalShelter: data.results});
-					console.log(data.results);
+				//	setStore({animalShelterSelected: data.results});
+				
+
+					if (shelter == "all"){
+
+						setStore({animalShelter: data.results});
+					//	setStore({animalShelterSelected: null});
+					
+   
+				   } else { 
+						setStore({animalShelterSelected: data.results});
+						//setStore({animalShelter: []});
+											   
+				   }
+				 
 				
 	
 				},

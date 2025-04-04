@@ -1,14 +1,53 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { Link, useNavigate } from "react-router-dom";
+import MapEmbed from '../component/GoogleMaps.jsx';  // Asegúrate de tener la ruta correcta
+import GoogleMaps from "../component/GoogleMaps.jsx";
 
 export const ProtectorasVistaDetalle = () => {
 	const { store, actions } = useContext(Context);
+	const host = process.env.BACKEND_URL;
+
+	const rutaImagenes = host + "/";
+
+
+	let map;
+
+			async function initMap() {
+			// The location of Uluru
+			const position = { lat: -25.344, lng: 131.031 };
+			// Request needed libraries.
+			//@ts-ignore
+			const { Map } = await google.maps.importLibrary("maps");
+			const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+			// The map, centered at Uluru
+			map = new Map(document.getElementById("map"), {
+				zoom: 4,
+				center: position,
+				mapId: "DEMO_MAP_ID",
+			});
+
+			// The marker, positioned at Uluru
+			const marker = new AdvancedMarkerElement({
+				map: map,
+				position: position,
+				title: "Uluru",
+			});
+			}
+
+
+			
+			
+initMap();
+
+	
+			
 
 	const listarAnimalShelters = () => {
 
-		const a = actions.getAnimalShelter(1);
-		
+		const a = actions.getAnimalShelter(store.animalShelterSelected.id);
+		console.log(store.animalShelterSelected)
 	
  
 	  }
@@ -24,6 +63,8 @@ export const ProtectorasVistaDetalle = () => {
 	
 
 	return (
+
+		
 		<div className="container">
 			<h1 className="text-center my-4">PROTECTORAS</h1>
 
@@ -35,31 +76,24 @@ export const ProtectorasVistaDetalle = () => {
 				{/* loop through the contact array using the map() function; */}
 			
 				<div className="col-md-4 mb-4">
-				   {
+				   
 							<div className="card" >
 								
-							<div className="card-body">
-								<h5 className="card-title mb-2">{store.animalShelter.shelter_name}</h5>
-								<img class="card-img-top" src={store.animalShelter.web_url} alt="Card image cap"/>
-								<h5 className="card-title mb-2">{store.animalShelter.city}</h5>
-								<h5 className="card-title mb-2">{store.animalShelter.address}</h5>
-								<h5 className="card-title mb-2">{store.animalShelter.email}</h5>
-								<h5 className="card-title mb-2">{store.animalShelter.phone_number}</h5>
-							
-							
-																					  
+								<div className="card-body">
+									<h5 className="card-title mb-2">{store.animalShelterSelected.shelter_name}</h5>
+									<img class="card-img-top" src={`${rutaImagenes}${store.animalShelterSelected.web_url}`} alt="Card image cap"/>
+									<h5 className="card-title mb-2">{store.animalShelterSelected.city}</h5>
+									<h5 className="card-title mb-2">{store.animalShelterSelected.address}</h5>
+									<h5 className="card-title mb-2">{store.animalShelterSelected.email}</h5>
+									<h5 className="card-title mb-2">{store.animalShelterSelected.phone_number}</h5>
+									<div className="container">{initMap}</div>
+									<GoogleMaps></GoogleMaps>																			
 															
-							} 	<button 
-									className="btn btn-outline-warning"
-									onClick={() => actions.addFavorite(iterator, store.selectedCategory)}
-								>
-									<i className="fas fa-heart"></i> Add to Favorites
-									</button>
-						
 							
+								
+								</div>
 							</div>
-							</div>
-							}	
+							
 						</div>
 					
 				
@@ -67,6 +101,9 @@ export const ProtectorasVistaDetalle = () => {
 			   
 			   
 			</div>
+					
 	</div>
+
 	);
 };
+
