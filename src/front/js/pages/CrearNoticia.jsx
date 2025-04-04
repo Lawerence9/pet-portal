@@ -11,16 +11,16 @@ export const CrearNoticia = () => {
         importance_level: "normal",
         img_url: ""
     });
-    const [message, setMessage] = useState(null); // Mensaje de éxito/error
+    const [message, setMessage] = useState(null);
 
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNotice({
-            ...notice,
+        setNotice(prev => ({
+            ...prev,
             [name]: value
-        });
+        }));
     };
 
     const handleSubmit = async (e) => {
@@ -32,10 +32,10 @@ export const CrearNoticia = () => {
         }
 
         const success = await actions.createNotice(notice);
-        
+
         if (success) {
-            setMessage("Noticia creada exitosamente.");
-            setTimeout(() => navigate("/news"), 2000); // Redirige después de 2s
+            setMessage("✅ Noticia creada exitosamente.");
+            setTimeout(() => navigate("/news"), 2000);
         } else {
             setMessage("Error al crear la noticia. Inténtalo de nuevo.");
         }
@@ -43,13 +43,13 @@ export const CrearNoticia = () => {
 
     return (
         <div className="container mt-5">
-            <h2>Crear Nueva Noticia</h2>
+            <h2 className="mb-4">Crear Nueva Noticia</h2>
 
             {message && <div className="alert alert-info">{message}</div>}
 
-            <form onSubmit={handleSubmit} className="p-3 border rounded shadow-sm">
-                <div className="form-group mb-3">
-                    <label htmlFor="title">Título</label>
+            <form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm bg-light">
+                <div className="mb-3">
+                    <label htmlFor="title" className="form-label">Título</label>
                     <input
                         type="text"
                         id="title"
@@ -61,20 +61,21 @@ export const CrearNoticia = () => {
                     />
                 </div>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="body">Contenido</label>
+                <div className="mb-3">
+                    <label htmlFor="body" className="form-label">Contenido</label>
                     <textarea
                         id="body"
                         name="body"
                         className="form-control"
+                        rows="5"
                         value={notice.body}
                         onChange={handleInputChange}
                         required
                     />
                 </div>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="status">Estado</label>
+                <div className="mb-3">
+                    <label htmlFor="status" className="form-label">Estado</label>
                     <select
                         id="status"
                         name="status"
@@ -87,8 +88,8 @@ export const CrearNoticia = () => {
                     </select>
                 </div>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="importance_level">Nivel de Importancia</label>
+                <div className="mb-3">
+                    <label htmlFor="importance_level" className="form-label">Nivel de Importancia</label>
                     <select
                         id="importance_level"
                         name="importance_level"
@@ -101,8 +102,8 @@ export const CrearNoticia = () => {
                     </select>
                 </div>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="img_url">URL de Imagen</label>
+                <div className="mb-3">
+                    <label htmlFor="img_url" className="form-label">URL de Imagen</label>
                     <input
                         type="text"
                         id="img_url"
@@ -112,8 +113,7 @@ export const CrearNoticia = () => {
                         onChange={handleInputChange}
                     />
                 </div>
-
-                <button type="submit" className="btn btn-primary w-100">Crear Noticia</button>
+                  <button type="submit" className="btn btn-primary w-100">Crear Noticia</button>
             </form>
         </div>
     );
