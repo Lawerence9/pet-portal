@@ -1,49 +1,46 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Noticias = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    actions.getNotice("all")
+  }, [])
+
   return (
-    <div className="text-center mt-5">
-      <h1>Noticias</h1>
-
-      
-      <button onClick={() => navigate("/listado-noticias")}>
-        Listado de Noticias
-      </button>
-
-     
-      {store?.news?.length > 0 ? (
-        <ul>
-          {store.news.map((item, index) => (
-            <li key={item.id || index}> 
-              <h3>{item.title}</h3>
-              <p>{item.body}</p> 
-              <button
-                onClick={() => {
-                  actions.setNotice(item); 
-                  navigate(`/detalle/${item.id}`); 
-                }}
-              >
-                Ver Detalles
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No hay noticias disponibles.</p>
-      )}
-
-      {store?.isProtector && (
-        <button onClick={() => navigate("/crear")}>Agregar Noticia Nueva</button>
-      )}
-      <button onClick={actions.toggleProtector}>
-        {store?.isProtector ? "Cambiar a Usuario Normal" : "Ingresar como Protectora"}
-      </button>
-      <button onClick={() => navigate("/")}>Volver a Inicio</button>
+    <div className="container mt-5">
+      <h1 className="text-center">Noticias</h1>
+      {store.userRole=="Protector" ? <Link to="/crear-noticia">
+            <button className="btn btn-primary mb-2">Nueva noticia</button>
+            </Link> : ""}
+      <div className="row text-center">
+        {store.notice.map((iterator) =>
+          <div className="col-md-4 mb-4" key={iterator.id}>
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title mb-2">{iterator.importance_level}</h5>
+                <h5 className="card-title mb-2">{iterator.title}</h5>
+                <img className="card-img-top" src={iterator.img_url} alt="Card image cap" />
+                <div className="mt-2">
+                  <Link to="/detalle-noticia">
+                    <button type="button" className="btn btn-primary mb-2" onClick={() => actions.getNotice(iterator.id)}>Detalles</button>
+                  </Link>
+                </div>
+                {/*} 	<button 
+                            className="btn btn-outline-warning"
+                            onClick={() => actions.addFavorite(iterator, store.selectedCategory)}
+                          >
+                            <i className="fas fa-heart"></i> Add to Favorites
+                            </button>
+                        */}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

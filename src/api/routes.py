@@ -428,9 +428,9 @@ def animal_shelter(shelter_id):
         row.shelter_name = data.get("shelter_name", row.shelter_name),
         row.address = data.get("address", row.address),
         row.phone_number = data.get("phone_number", row.phone_number),
-        row.city = ("city", row.city),
-        row.email = ("email", row.email),
-        row.web_url = ("web_url", row.web_url)
+        row.city = data.get("city", row.city),
+        row.email = data.get("email", row.email),
+        row.web_url = data.get("web_url", row.web_url)
         db.session.commit()
         response_body["message"] = "Shelter data updated successfully"
         return response_body, 200
@@ -481,9 +481,9 @@ def veterinary(veterinary_id):
         row.veterinary_name = data.get("veterinary_name", row.veterinary_name),
         row.address = data.get("address", row.address),
         row.phone_number = data.get("phone_number", row.phone_number),
-        row.city = ("city", row.city),
-        row.email = ("email", row.email),
-        row.web_url = ("web_url", row.web_url)
+        row.city = data.get("city", row.city),
+        row.email = data.get("email", row.email),
+        row.web_url = data.get("web_url", row.web_url)
         db.session.commit()
         response_body["message"] = "Veterinary data updated successfully"
         return response_body, 200
