@@ -34,8 +34,9 @@ export const CrearNoticia = () => {
         const success = await actions.createNotice(notice);
 
         if (success) {
-            setMessage("✅ Noticia creada exitosamente.");
-            setTimeout(() => navigate("/news"), 2000);
+
+            setMessage("Noticia creada exitosamente.");
+            setTimeout(() => navigate("/noticias"), 2000); // Redirige después de 2s
         } else {
             setMessage("Error al crear la noticia. Inténtalo de nuevo.");
         }
@@ -97,7 +98,8 @@ export const CrearNoticia = () => {
                         value={notice.importance_level}
                         onChange={handleInputChange}
                     >
-                        <option value="normal">Normal</option>
+                        <option value="low">Baja</option>
+                        <option value="medium">Normal</option>
                         <option value="high">Alto</option>
                     </select>
                 </div>

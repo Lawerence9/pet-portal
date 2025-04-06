@@ -150,6 +150,8 @@ class AnimalShelter(db.Model):
     city = db.Column(db.String)
     email = db.Column(db.String)
     web_url = db.Column(db.String)
+    img_url = db.Column(db.String)
+    coordinates = db.Column(db.Float)
 
     def serialize(self):
         return {'id': self.id,
@@ -158,7 +160,9 @@ class AnimalShelter(db.Model):
                 'phone_number': self.phone_number,
                 'city': self.city,
                 'email': self.email,
-                'web_url': self.web_url}
+                'web_url': self.web_url,
+                'img_url': self.img_url,
+                'coordinates': self.coordinates}
 
 
 class Veterinary(db.Model):
@@ -170,6 +174,8 @@ class Veterinary(db.Model):
     city = db.Column(db.String)
     email = db.Column(db.String)
     web_url = db.Column(db.String)
+    img_url = db.Column(db.String)
+    coordinates = db.Column(db.Float)
 
     def serialize(self):
         return{'id': self.id,
@@ -178,5 +184,7 @@ class Veterinary(db.Model):
                'phone_number': self.phone_number,
                'city': self.city,
                'email': self.email,
-               'web_url': self.web_url}
+               'web_url': self.web_url,
+               'img_url': self.img_url,
+               'coordinates': self.coordinates}
     

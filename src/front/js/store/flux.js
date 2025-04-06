@@ -14,11 +14,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user_id: '1',
 			sos_id: '',
 			user: {},
+			userRole:"",
+			token: "",
 			password: 'password',
 			notice:[],
+			selectedNews:[],
 			animalShelter:[],
 			animalShelterSelected:{},
 			adoptions: [],
+			selectedAdoption:[],
 			veterinary:[],
 			sosCase: [],
 			//host: "https://playground.4geeks.com",
@@ -50,6 +54,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setSelectedElements: (elemento) => { setStore({ selectedElement: elemento }) },
 			setIsLogged: (value) => { setStore({ isLogged: value }) },
 			setiIsEditing: (valor) => { setStore({ isEditing: valor }) },
+
+			clearSelectedNews: () => {setStore({ selectedNews: {} })},
+			  
 
 			setSelectedCategory: (category) => {
 
@@ -86,8 +93,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({
 
 					user: data.results.user_name,
+					userRole: data.results.role,
+					token: data.access_token,
 					isLogged: true
 				})
+				
 
 				localStorage.setItem("token", data.access_token);
 				localStorage.setItem('user', JSON.stringify(data))
@@ -101,6 +111,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				setStore({ isLogged: false });
 				setStore({ user: "" });
+				setStore({ userRole: ""})
 
 
 				const message = {
@@ -167,7 +178,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const options = {
 					method: 'POST',
-					headers: {"Content-Type": "application/json"},
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${store.token}`
+					},
                     body: JSON.stringify(dataToSend)							
 				};
 				
@@ -368,11 +382,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				if (notice == "all"){
 
-					 uri = `${host}/api/news}`;
+					 uri = `${host}/api/news`;
 					
 
 				} else { 
-					 uri = `${host}/api/news/${notice.id}`;
+					 uri = `${host}/api/news/${notice}`;
 					
 				}
 
@@ -393,10 +407,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
-					setStore({notice: data.results});
-					console.log(notice);
-				
-					
+
+					if (notice === "all") {
+						setStore({ notice: data.results });
+					} else {
+						setStore({ selectedNews: data.results });
+					}
 	
 				},
 
@@ -466,12 +482,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					
 					const store = getStore();
 					const actions = getActions();
+					let uri =""
 
 					let uri = "";
 
 					if (adoptions == "all"){
 
-						uri = `${host}/api/adoptions}`;
+						uri = `${host}/api/adoptions`;
 
 					} else { 
 						uri = `${host}/api/adoptions/${adoptions}`;
@@ -495,7 +512,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
-					setStore({adoptions: data.results});
+					if (adoptions === "all") {
+						setStore({ adoptions: data.results });
+					} else {
+						setStore({ selectedAdoption: data.results });
+					}
 				
 	
 				},

@@ -1,27 +1,31 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
+import { Link } from "react-router-dom";
 
 export const Adopciones = () => {
 	const { store, actions } = useContext(Context);
 
 	useEffect(() => {
-		actions.getAdoptions()
+		actions.getAdoptions("all")
 	}, []);
 
 
 	return (
 		<div className="container">
 			<h1 className="text-center my-4">ADOPCIONES</h1>
+			{store.userRole=="Protector" ? <Link to="/new-adoption">
+			<button className="btn btn-primary mb-2">Nueva adopción</button>
+			</Link> : ""}
 			<div className="row">
-				{store.adoptions.map((iterator, index) =>
-					<div className="col-md-4 mb-4">
-						<div className="card" >
+				{store.adoptions.map((iterator) =>
+					<div className="col-md-4 mb-4" key={iterator.id}>
+						<div className="card">
 							<div className="card-body">
 								<h5 className="card-title mb-2">{iterator.status}</h5>
-								<img class="card-img-top" src={iterator.img_url} alt="Card image cap" />
+								<img className="card-img-top" src={iterator.img_url} alt="Card image cap" />
 								<h5 className="card-title mb-2">{iterator.province}</h5>
-								<Link to="/" >
-									<button type="button" className="btn btn-primary mb-2" onClick={(event) => actions.getAdoptions(iterator.id)} >Ver adopcion</button>
+								<Link to="/adoption-details" >
+									<button type="button" className="btn btn-primary mb-2" onClick={() => actions.getAdoptions(iterator.id)} >Ver adopcion</button>
 								</Link>
 								{/*} 	<button 
 											className="btn btn-outline-warning"

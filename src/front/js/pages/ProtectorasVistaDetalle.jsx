@@ -41,6 +41,7 @@ export const ProtectorasVistaDetalle = () => {
 			
 initMap();
 
+
 	
 			
 
@@ -57,10 +58,10 @@ initMap();
 	useEffect(() => {
 		//   getTodos();
 		listarAnimalShelters()
-	//	console.log(store.Protectoras)
-	  
-	   }, []);
-	
+		//	console.log(store.Protectoras)
+
+	}, []);
+
 
 	return (
 
@@ -68,14 +69,17 @@ initMap();
 		<div className="container">
 			<h1 className="text-center my-4">PROTECTORAS</h1>
 
-		<div className="row">
-		  
+			<div className="row">
 
-					  
-				{/* recorre el array contact usando la función map(); */}  
+
+
+				{/* recorre el array contact usando la función map(); */}
 				{/* loop through the contact array using the map() function; */}
-			
+
 				<div className="col-md-4 mb-4">
+
+
+
 				   
 							<div className="card" >
 								
@@ -93,16 +97,17 @@ initMap();
 								
 								</div>
 							</div>
-							
 						</div>
-					
-				
+					}
+				</div>
 
-			   
-			   
+
+
+
+
 			</div>
-					
-	</div>
+
+		</div>
 
 	);
 };

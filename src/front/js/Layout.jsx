@@ -26,6 +26,9 @@ import { ProtectorasVistaDetalle } from "./pages/ProtectorasVistaDetalle.jsx"
 
 
 import { SignUp } from "./pages/SignUp.jsx";
+import { NewAdoption } from "./pages/NewAdoption.jsx";
+import { AdoptionDetails } from "./pages/AdoptionDetails.jsx";
+import { ContactForm } from "./pages/ContactForm.jsx";
 
 const basename = process.env.BASENAME || "";
 
@@ -47,6 +50,8 @@ const Layout = () => {
                         <Route element={<Home />} path="/home" />
                         <Route element={<Error404 />} path="*" />
                         <Route element={<Adopciones />} path="/adopciones" />
+                        <Route element={<NewAdoption/>} path="/new-adoption"/>
+                        <Route element={<AdoptionDetails/>} path="/adoption-details"/>
                         <Route element={<Donaciones />} path="/donaciones" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignUp/>} path="/sign-up" />
@@ -61,7 +66,7 @@ const Layout = () => {
                         <Route element={<Veterinarias />} path="/veterinarias" />
                         <Route element={<VistaDetalles />} path="/vista-detalles" />
                         <Route element={<ProtectorasVistaDetalle />} path="/animal-shelter-detail" />
-                      
+                        <Route element={<ContactForm />} path="/contact-form"/>
                     </Routes>
                     <Footer />
                 </ScrollToTop>
