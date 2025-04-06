@@ -1,25 +1,33 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useSyncExternalStore } from "react";
 import { Context } from "../store/appContext.js";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation, Navigate  } from "react-router-dom";
 
 export const Protectoras = () => {
 	const { store, actions } = useContext(Context);
 
+	const host = process.env.BACKEND_URL;
+	const rutaImagenes = host + "";
+	console.log(store.animalShelterSelected)
+		
+
 	const listarAnimalShelters = () => {
 
 		actions.getAnimalShelter("all");
+	
+	
 	//	console.log(store.Protectoras)
 	
  
 	  }
 
-	//  actions.getAnimalShelter("all");
+	 //  actions.getAnimalShelter("all");
 
 	useEffect(() => {
 		//   getTodos();
-		listarAnimalShelters("all")
-	//	console.log(store.Protectoras)
-	  
+		console.log(store.animalShelter);
+		actions.getAnimalShelter("all");
+		console.log("use effect");
+		
 	   }, []);
 	
 
@@ -40,12 +48,12 @@ export const Protectoras = () => {
 								
 							<div className="card-body">
 								<h5 className="card-title mb-2">{iterator.shelter_name}</h5>
-								<img class="card-img-top" src={iterator.web_url} alt="Card image cap"/>
+								<img class="card-img-top" src={`${rutaImagenes}/${iterator.web_url}`} alt="Card image cap"/>
 								<h5 className="card-title mb-2">{iterator.city}</h5>
 							
 																					  
 								<Link to="/animal-shelter-detail" >
-											<button type="button" className="btn btn-primary mb-2" onClick={(event) => actions.getAnimalShelter(iterator.uid)} >Ver protectora</button>
+											<button type="button" className="btn btn-primary mb-2" onClick={(event) => actions.getAnimalShelter(iterator.id)} >Ver protectora</button>
 								</Link>
 								
 							{/*} 	<button 
