@@ -482,7 +482,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					
 					const store = getStore();
 					const actions = getActions();
-					let uri =""
 
 					let uri = "";
 
