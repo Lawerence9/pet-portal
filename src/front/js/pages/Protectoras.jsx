@@ -47,7 +47,7 @@ export const Protectoras = () => {
 							<div className="card" >
 								
 							<div className="card-body">
-								<h5 className="card-title mb-2">{iterator.shelter_name}</h5>
+								<h5 className="card-title mb-2 text-center">{iterator.shelter_name}</h5>
 								<img class="card-img-top" src={`${rutaImagenes}/${iterator.web_url}`} alt="Card image cap"/>
 								<h5 className="card-title mb-2">{iterator.city}</h5>
 							
