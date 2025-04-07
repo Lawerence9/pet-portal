@@ -482,7 +482,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					
 					const store = getStore();
 					const actions = getActions();
-					
+
 					let uri = "";
 
 					if (adoptions == "all"){
