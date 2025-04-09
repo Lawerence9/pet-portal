@@ -1,8 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
+import {Mapa} from '../../js/component/Mapa.jsx';
 import { Link, useNavigate } from "react-router-dom";
-import MapEmbed from '../component/GoogleMaps.jsx';  // Asegúrate de tener la ruta correcta
-import GoogleMaps from "../component/GoogleMaps.jsx";
+
+const libraries = ["places"];
+const API_KEY = "AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k";
+
 
 export const ProtectorasVistaDetalle = () => {
 	const { store, actions } = useContext(Context);
@@ -11,39 +14,7 @@ export const ProtectorasVistaDetalle = () => {
 	const rutaImagenes = host + "/";
 
 
-	let map;
-
-			async function initMap() {
-			// The location of Uluru
-			const position = { lat: -25.344, lng: 131.031 };
-			// Request needed libraries.
-			//@ts-ignore
-			const { Map } = await google.maps.importLibrary("maps");
-			const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-
-			// The map, centered at Uluru
-			map = new Map(document.getElementById("map"), {
-				zoom: 4,
-				center: position,
-				mapId: "DEMO_MAP_ID",
-			});
-
-			// The marker, positioned at Uluru
-			const marker = new AdvancedMarkerElement({
-				map: map,
-				position: position,
-				title: "Uluru",
-			});
-			}
-
-
-			
-			
-initMap();
-
-
-	
-			
+				
 
 	const listarAnimalShelters = () => {
 
@@ -67,7 +38,7 @@ initMap();
 
 		
 		<div className="container">
-			<h1 className="text-center my-4">PROTECTORAS</h1>
+			<h1 className="text-center my-4">LOCALIZACIÓN Y CONTACTO</h1>
 
 			<div className="row">
 
@@ -76,39 +47,42 @@ initMap();
 				{/* recorre el array contact usando la función map(); */}
 				{/* loop through the contact array using the map() function; */}
 
-				<div className="col-md-4 mb-4">
+				<div className="col-md-12 mb-4 d-flex align-items-start">
 
 
 
 				   
-							<div className="card" >
-								
-								<div className="card-body">
-									<h5 className="card-title mb-2">{store.animalShelterSelected.shelter_name}</h5>
-									<img class="card-img-top" src={`${rutaImagenes}${store.animalShelterSelected.web_url}`} alt="Card image cap"/>
-									<h5 className="card-title mb-2">{store.animalShelterSelected.city}</h5>
-									<h5 className="card-title mb-2">{store.animalShelterSelected.address}</h5>
-									<h5 className="card-title mb-2">{store.animalShelterSelected.email}</h5>
-									<h5 className="card-title mb-2">{store.animalShelterSelected.phone_number}</h5>
-									<div className="container">{initMap}</div>
-									<GoogleMaps></GoogleMaps>																			
-															
-							
-								
+				<div className="card me-4" style={{ width: '30%' , height: '600px' }}>
+							<div className="card-body">
+							<h5 className="card-title mb-2 text-center">{store.animalShelterSelected.shelter_name}</h5>
+							<img
+								className="card-img-top"
+								src={`${rutaImagenes}${store.animalShelterSelected.web_url}`}
+								alt="Card image cap"
+							/>
+							<h5 className="card-title mb-2">{store.animalShelterSelected.city}</h5>
+							<h5 className="card-title mb-2">{store.animalShelterSelected.address}</h5>
+							<h5 className="card-title mb-2">{store.animalShelterSelected.email}</h5>
+							<h5 className="card-title mb-2">{store.animalShelterSelected.phone_number}</h5>
+							</div>
+						</div>					
+				</div>
+
+						{/* Mapa */}
+						{store.animalShelterSelected.address ? (
+         					 <div className="mapa" style={{ width: '70%' , height: '600px' }}>
+          						 <Mapa direccion ={store.animalShelterSelected.address + " " + store.animalShelterSelected.city} />
+        					 </div>
+       					 ) : null}
+
+								</div>
+								<div>
+										<Link to="/contact-form">
+										<button className="btn btn-primary">Contactar</button>
+										</Link>
 								</div>
 							</div>
 						</div>
-					
-				</div>
-
-
-
-
-
-			</div>
-
-
-
-	);
+		);
 };
 
