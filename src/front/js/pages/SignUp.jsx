@@ -2,39 +2,51 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
-    const navigate = useNavigate()
+	const navigate = useNavigate();
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [user_name, setUser_name] = useState("")
-    const [error, setError] = useState("")
-    const [success, setSuccess] = useState("")
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [user_name, setUser_name] = useState("");
+	const [role, setRole] = useState("");
+	const [error, setError] = useState("");
+	const [success, setSuccess] = useState("");
+	const [showRoleError, setShowRoleError] = useState(false);
 
+	const roleType = {
+		User: "Usuario",
+		Protector: "Protectora",
+		Veterinary: "Veterinaria"
+	};
 
-    const handleSubmit = async (event) => {
-        event.preventDefault()
+	const handleSubmit = async (event) => {
+		event.preventDefault();
 
-        const response = await fetch(`${process.env.BACKEND_URL}/api/sign-up`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_name, email, password })
-        });
+		if (!role) {
+			setShowRoleError(true);
+			setError("Debes elegir un rol.");
+			return;
+		}
 
-        const data = await response.json()
+		setShowRoleError(false);
+		setError("");
 
-        if (response.ok) {
-            setSuccess("Account created successfully! Redirecting...");
-            setTimeout(() => navigate("/login"), 2000);
-        }
+		const response = await fetch(`${process.env.BACKEND_URL}/api/sign-up`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ user_name, email, password, role })
+		});
 
-        else {
-            setError(data.message || "Error signing up. Try again.");
-        }
+		const data = await response.json();
 
-        
-    }    
+		if (response.ok) {
+			setSuccess("¡Cuenta creada con éxito! Redirigiendo...");
+			setTimeout(() => navigate("/login"), 2000);
+		} else {
+			setError(data.message || "Error al registrarse. Inténtalo de nuevo.");
+		}
+	};
 
-    return (
+	return (
 		<div className="container d-flex justify-content-center">
 			<form onSubmit={handleSubmit}>
 				<h2 className="text-center mb-3">Sign Up</h2>
@@ -54,13 +66,33 @@ export const SignUp = () => {
 							<input onChange={(e) => setPassword(e.target.value)} type="password" value={password} className="form-control" placeholder="Password" required />
 						</span>
 					</div>
+					<div className="input-group mb-3 justify-content-center">
+						<span>Rol
+							<div className="dropdown">
+								<button
+									className={`btn dropdown-toggle ${showRoleError ? 'btn-danger' : 'btn-primary'}`}
+									type="button"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+								>
+									{roleType[role] || "Selecciona"}
+								</button>
+								<ul className="dropdown-menu">
+									<li><span className="dropdown-item" onClick={() => setRole("User")}>Usuario</span></li>
+									<li><span className="dropdown-item" onClick={() => setRole("Protector")}>Protectora</span></li>
+									<li><span className="dropdown-item" onClick={() => setRole("Veterinary")}>Veterinaria</span></li>
+								</ul>
+							</div>
+							{showRoleError && <div className="text-danger mt-1">* Este campo es obligatorio</div>}
+						</span>
+					</div>
 					<div>
 						<button type="submit" className="btn btn-primary">Submit</button>
 					</div>
 				</div>
-                {error && <p className="text-danger">{error}</p>}
-                {success && <p className="text-success">{success}</p>}
+				{error && <p className="text-danger">{error}</p>}
+				{success && <p className="text-success">{success}</p>}
 			</form>
 		</div>
 	);
-}
+};

@@ -9,6 +9,10 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import get_jwt
+import os
+from flask import current_app
+from werkzeug.utils import secure_filename
+
 
 
 api = Blueprint('api', __name__)
@@ -71,7 +75,7 @@ def sign_up():
         new_user = Users(user_name = data.get("user_name"),
                          email = data.get("email"),
                          password = data.get("password"),
-                         role = data.get("role", "Protector"),
+                         role = data.get("role"),
                          is_active = True)
         db.session.add(new_user)
         db.session.commit()
@@ -209,7 +213,7 @@ def adoptions():
                                  province = data.get("province"),
                                  description = data.get("description"),
                                  img_url = data.get("img_url"),
-                                 adoption_priority = data.get("adoption_priority"),
+                                 adoption_priority = True,
                                  user_id = additional_claims["user_id"])
         db.session.add(new_adoption)
         db.session.commit()
@@ -493,3 +497,26 @@ def veterinary(veterinary_id):
         response_body["message"] = "Veterinary deleted successfully"
         response_body["results"] = {}
         return response_body, 200
+
+
+# Función auxiliar para validar archivos permitidos
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
+
+# Endpoint para subir imágenes
+@api.route('/upload', methods=['POST'])
+def upload_image():
+    if 'image' not in request.files:
+        return jsonify({'message': 'No file part'}), 400
+    file = request.files['image']
+
+    if file.filename == '':
+        return jsonify({'message': 'No selected file'}), 400
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+        img_url = f'{filename}'
+        return jsonify({'img_url': img_url}), 200
+    else:
+        return jsonify({'message': 'File not allowed'}), 400

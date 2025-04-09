@@ -65,6 +65,7 @@ export const ProtectorasVistaDetalle = () => {
 							<h5 className="card-title mb-2">{store.animalShelterSelected.email}</h5>
 							<h5 className="card-title mb-2">{store.animalShelterSelected.phone_number}</h5>
 							</div>
+						</div>					
 				</div>
 
 						{/* Mapa */}
@@ -74,7 +75,6 @@ export const ProtectorasVistaDetalle = () => {
         					 </div>
        					 ) : null}
 
-
 								</div>
 								<div>
 										<Link to="/contact-form">
@@ -83,7 +83,6 @@ export const ProtectorasVistaDetalle = () => {
 								</div>
 							</div>
 						</div>
-			
 		);
 };
 

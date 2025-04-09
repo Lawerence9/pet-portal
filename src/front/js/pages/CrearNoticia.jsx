@@ -1,122 +1,146 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../store/appContext.js";
+import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
 export const CrearNoticia = () => {
-    const { actions } = useContext(Context);
-    const [notice, setNotice] = useState({
-        title: "",
-        body: "",
-        status: "active",
-        importance_level: "normal",
-        img_url: ""
-    });
-    const [message, setMessage] = useState(null);
-
+    const { store } = useContext(Context);
     const navigate = useNavigate();
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNotice(prev => ({
-            ...prev,
-            [name]: value
-        }));
+    const [title, setTitle] = useState("");
+    const [body, setBody] = useState("");
+    const [importance_level, setImportance_level] = useState("low");
+    const [img_url, setImg_url] = useState("");
+    const [file, setFile] = useState(null);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+    const importanceLabels = {
+        low: "Baja",
+        medium: "Normal",
+        high: "Alta"
+    };
+
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!notice.title.trim() || !notice.body.trim()) {
-            setMessage("El título y el contenido son obligatorios.");
+        let uploadedImageUrl = null;
+
+        if (file) {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            const uploadRes = await fetch(`${process.env.BACKEND_URL}/api/upload`, {
+                method: "POST",
+                body: formData,
+            });
+
+            const uploadData = await uploadRes.json();
+
+            if (!uploadRes.ok || !uploadData.img_url) {
+                setError("Error al subir la imagen.");
+                return;
+            }
+
+            uploadedImageUrl = uploadData.img_url;
+            setImg_url(uploadedImageUrl);
+        }
+
+        if (!title.trim() || !body.trim()) {
+            setError("El título y el contenido son obligatorios.");
             return;
         }
 
-        const success = await actions.createNotice(notice);
+        const response = await fetch(`${process.env.BACKEND_URL}/api/news`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${store.token}`,
+            },
+            body: JSON.stringify({
+                title,
+                body,
+                importance_level,
+                status: "active",
+                img_url: uploadedImageUrl || img_url,
+            }),
+        });
 
-        if (success) {
+        const data = await response.json();
 
-            setMessage("Noticia creada exitosamente.");
-            setTimeout(() => navigate("/noticias"), 2000); // Redirige después de 2s
+        if (response.ok) {
+            setSuccess("Noticia creada exitosamente. Redirigiendo...");
+            setTimeout(() => navigate("/noticias"), 2000);
         } else {
-            setMessage("Error al crear la noticia. Inténtalo de nuevo.");
+            setError(data.message || "Error al crear la noticia.");
         }
     };
 
     return (
-        <div className="container mt-5">
-            <h2 className="mb-4">Crear Nueva Noticia</h2>
-
-            {message && <div className="alert alert-info">{message}</div>}
-
-            <form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm bg-light">
-                <div className="mb-3">
-                    <label htmlFor="title" className="form-label">Título</label>
-                    <input
-                        type="text"
-                        id="title"
-                        name="title"
-                        className="form-control"
-                        value={notice.title}
-                        onChange={handleInputChange}
-                        required
-                    />
+        <form
+            className="container d-flex flex-column align-items-center justify-content-center mt-5"
+            onSubmit={handleSubmit}
+        >
+            <div className="text-center mb-3">
+                <h2>Crear Nueva Noticia</h2>
+            </div>
+            <div>
+                <div className="input-group mb-3">
+                    <input type="file" accept="image/*" onChange={handleFileChange} />
+                    {file && <p>Imagen lista para subir</p>}
+                    {img_url && <img src={img_url} alt="Subida" style={{ maxWidth: "300px" }} />}
                 </div>
-
-                <div className="mb-3">
-                    <label htmlFor="body" className="form-label">Contenido</label>
-                    <textarea
-                        id="body"
-                        name="body"
-                        className="form-control"
-                        rows="5"
-                        value={notice.body}
-                        onChange={handleInputChange}
-                        required
-                    />
+                <div className="input-group mb-3">
+                    <span>Título
+                        <input
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            className="form-control"
+                            required
+                        />
+                    </span>
                 </div>
-
-                <div className="mb-3">
-                    <label htmlFor="status" className="form-label">Estado</label>
-                    <select
-                        id="status"
-                        name="status"
-                        className="form-select"
-                        value={notice.status}
-                        onChange={handleInputChange}
-                    >
-                        <option value="active">Activo</option>
-                        <option value="inactive">Inactivo</option>
-                    </select>
+                <div className="input-group mb-3">
+                    <span>Contenido
+                        <textarea
+                            value={body}
+                            onChange={(e) => setBody(e.target.value)}
+                            className="form-control"
+                            rows="4"
+                            required
+                        />
+                    </span>
                 </div>
-
-                <div className="mb-3">
-                    <label htmlFor="importance_level" className="form-label">Nivel de Importancia</label>
-                    <select
-                        id="importance_level"
-                        name="importance_level"
-                        className="form-select"
-                        value={notice.importance_level}
-                        onChange={handleInputChange}
-                    >
-                        <option value="low">Baja</option>
-                        <option value="medium">Normal</option>
-                        <option value="high">Alto</option>
-                    </select>
+                <div className="input-group mb-3">
+                    <span>Nivel de importancia
+                        <div className="dropdown">
+                            <button
+                                className="btn btn-primary dropdown-toggle"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                {importanceLabels[importance_level] || "Selecciona"}
+                            </button>
+                            <ul className="dropdown-menu">
+                                <li><span className="dropdown-item" onClick={() => setImportance_level("low")}>Baja</span></li>
+                                <li><span className="dropdown-item" onClick={() => setImportance_level("medium")}>Normal</span></li>
+                                <li><span className="dropdown-item" onClick={() => setImportance_level("high")}>Alta</span></li>
+                            </ul>
+                        </div>
+                    </span>
                 </div>
-
-                <div className="mb-3">
-                    <label htmlFor="img_url" className="form-label">URL de Imagen</label>
-                    <input
-                        type="text"
-                        id="img_url"
-                        name="img_url"
-                        className="form-control"
-                        value={notice.img_url}
-                        onChange={handleInputChange}
-                    />
+                <div className="text-center">
+                    <button type="submit" className="btn btn-primary">Crear Noticia</button>
                 </div>
-                  <button type="submit" className="btn btn-primary w-100">Crear Noticia</button>
-            </form>
-        </div>
+            </div>
+            {error && <p className="text-danger">{error}</p>}
+            {success && <p className="text-success">{success}</p>}
+        </form>
     );
 };
