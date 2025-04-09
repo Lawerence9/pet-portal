@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
+import Fondoadop from "../../img/fadop.jpeg";
 
 export const Adopciones = () => {
 	const { store, actions } = useContext(Context);
@@ -11,7 +12,7 @@ export const Adopciones = () => {
 
 
 	return (
-		<div className="container">
+		<div className="container"  style={{backgroundImage: `url(${Fondoadop})`, backgroundSize: "cover", height: "190vh"}}>
 			<h1 className="text-center my-4">ADOPCIONES</h1>
 			{store.userRole=="Protector" ? <Link to="/new-adoption">
 			<button className="btn btn-primary mb-2">Nueva adopción</button>

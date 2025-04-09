@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useSyncExternalStore } from "react";
 import { Context } from "../store/appContext.js";
 import { Link, useNavigate, useLocation, Navigate  } from "react-router-dom";
+import Fondopr from "../../img/fprotectora.jpeg";
 
 export const Protectoras = () => {
 	const { store, actions } = useContext(Context);
@@ -32,7 +33,7 @@ export const Protectoras = () => {
 	
 
 	return (
-		<div className="container">
+		<div className="container" style={{backgroundImage: `url(${Fondopr})`, backgroundSize: "cover", height: "200vh"}}>
 			<h1 className="text-center my-4">PROTECTORAS</h1>
 
 		<div className="row">
