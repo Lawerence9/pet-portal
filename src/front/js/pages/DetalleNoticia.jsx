@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
-import { Link, useNavigate } from "react-router-dom";
 
 export const DetalleNoticia = () => {
   const { store, actions } = useContext(Context);
+  const host = process.env.BACKEND_URL;
+	const rutaImagenes = host + "";
 
   useEffect(() => {
     actions.clearSelectedNews();
@@ -26,12 +27,9 @@ export const DetalleNoticia = () => {
             <div className="card">
               <div className="card-body">
                 <h5 className="card-title mb-2">{store.selectedNews.title}</h5>
-                <img className="card-img-top" src={store.selectedNews.img_url} alt="Imagen noticia" />
+                <img className="card-img-top" src={`${rutaImagenes}/${store.selectedNews.img_url}`} alt="Imagen noticia" />
                 <h5 className="card-title mb-2">{store.selectedNews.body}</h5>
                 <div>
-                  <Link to="/noticias">
-                    <button className="btn btn-primary">Atrás</button>
-                  </Link>
                 </div>
               </div>
             </div>
