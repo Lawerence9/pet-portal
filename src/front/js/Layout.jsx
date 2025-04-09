@@ -18,7 +18,7 @@ import { SitiosInteres } from "./pages/SitiosInteres.jsx";
 import { SosAnimal } from "./pages/SosAnimal.jsx";
 import { Tiendas } from "./pages/Tiendas.jsx";
 import { Veterinarias } from "./pages/Veterinarias.jsx";
-import { VistaDetalles } from "./pages/VistaDetalles.jsx";
+import { VeterinariasVistaDetalle } from "./pages/VeterinariasVistaDetalle.jsx";
 import { ListadoNoticias } from "./pages/ListadoNoticias.jsx";
 import { CrearNoticia } from "./pages/CrearNoticia.jsx";
 import { DetalleNoticia } from "./pages/DetalleNoticia.jsx"
@@ -64,7 +64,7 @@ const Layout = () => {
                         <Route element={<SosAnimal />} path="/sos-animal" /> 
                         <Route element={<Tiendas />} path="/Tiendas" />
                         <Route element={<Veterinarias />} path="/veterinarias" />
-                        <Route element={<VistaDetalles />} path="/vista-detalles" />
+                        <Route element={<VeterinariasVistaDetalle />} path="/vista-detalles" />
                         <Route element={<ProtectorasVistaDetalle />} path="/animal-shelter-detail" />
                         <Route element={<ContactForm />} path="/contact-form"/>
                     </Routes>
