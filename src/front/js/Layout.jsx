@@ -9,15 +9,37 @@ import { Footer } from "./component/Footer.jsx";
 // Custom pages or views
 import { Home } from "./pages/Home.jsx";
 import { Error404 } from "./pages/Error404.jsx";
+import { Adopciones } from "./pages/Adopciones.jsx";
+import { Donaciones } from "./pages/Donaciones.jsx";
+import { Login } from "./pages/Login.jsx";
+import { Noticias } from "./pages/Noticias.jsx";
+import { Protectoras } from "./pages/Protectoras.jsx";
+import { SitiosInteres } from "./pages/SitiosInteres.jsx";
+import { SosAnimal } from "./pages/SosAnimal.jsx";
+import { Tiendas } from "./pages/Tiendas.jsx";
+import { Veterinarias } from "./pages/Veterinarias.jsx";
+import { VeterinariasVistaDetalle } from "./pages/VeterinariasVistaDetalle.jsx";
+import { ListadoNoticias } from "./pages/ListadoNoticias.jsx";
+import { CrearNoticia } from "./pages/CrearNoticia.jsx";
+import { DetalleNoticia } from "./pages/DetalleNoticia.jsx"
+import { ProtectorasVistaDetalle } from "./pages/ProtectorasVistaDetalle.jsx"
 
+
+import { SignUp } from "./pages/SignUp.jsx";
+import { NewAdoption } from "./pages/NewAdoption.jsx";
+import { AdoptionDetails } from "./pages/AdoptionDetails.jsx";
+import { ContactForm } from "./pages/ContactForm.jsx";
+
+const basename = process.env.BASENAME || "";
 
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
-    const basename = process.env.BASENAME || "";
+  
 
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+    // if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+    
 
     return (
         <div>
@@ -25,8 +47,26 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element={<Home />} path="/home" />
                         <Route element={<Error404 />} path="*" />
+                        <Route element={<Adopciones />} path="/adopciones" />
+                        <Route element={<NewAdoption/>} path="/new-adoption"/>
+                        <Route element={<AdoptionDetails/>} path="/adoption-details"/>
+                        <Route element={<Donaciones />} path="/donaciones" />
+                        <Route element={<Login />} path="/login" />
+                        <Route element={<SignUp/>} path="/sign-up" />
+                        <Route element={<Noticias />} path="/noticias" />
+                        <Route element={<ListadoNoticias />} path="/listado-noticias" />
+                        <Route element={<CrearNoticia/>} path="/crear-noticia" />
+                        <Route element={<DetalleNoticia />} path="/detalle-noticia" />
+                        <Route element={<Protectoras />} path="/protectoras" />
+                        <Route element={<SitiosInteres />} path="/sitios-interes" />
+                        <Route element={<SosAnimal />} path="/sos-animal" /> 
+                        <Route element={<Tiendas />} path="/Tiendas" />
+                        <Route element={<Veterinarias />} path="/veterinarias" />
+                        <Route element={<VeterinariasVistaDetalle />} path="/vista-detalles" />
+                        <Route element={<ProtectorasVistaDetalle />} path="/animal-shelter-detail" />
+                        <Route element={<ContactForm />} path="/contact-form"/>
                     </Routes>
                     <Footer />
                 </ScrollToTop>
