@@ -1,3 +1,101 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+body {
+    background-color: #070107;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  /* Contenedor principal */
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Contenido */
+  .content {
+    flex: 1;
+    padding: 2rem;
+    backdrop-filter: blur(5px);
+  }
+  
+  /* Títulos */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    color: #d3cbdb;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Footer */
+  footer {
+    background: linear-gradient(178deg, rgba(202, 33, 154, 0.514) 1%, rgba(130, 11, 163, 0.497) 59%, #130112 98%);
+    color: #8469a0;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    width: 100%;
+    margin-top: 2rem;
+    border-top: 2px solid #6b0666;
+  }
+  
+  footer a {
+    color: #cbbfd0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  footer a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  
+  /* Botones */
+  button {
+    background-color: #a35d86;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #8e4a70;
+    transform: scale(1.05);
+  }
+  
+  /* Tarjetas */
+  .card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    color: #f5ecff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .content {
+      padding: 1rem;
+    }
+  
+    h1 {
+      font-size: 1.8rem;
+    }
+  }
+  

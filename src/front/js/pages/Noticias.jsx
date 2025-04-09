@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Fondonews from "../../img/fnoti.jpeg";
 
-export const Noticias = () => {
+
+  export const Noticias = () => {
   const { store, actions } = useContext(Context);
 	const host = process.env.BACKEND_URL;
 	const rutaImagenes = host + "";
@@ -12,7 +14,7 @@ export const Noticias = () => {
   }, [])
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{backgroundImage: `url(${Fondonews})`, backgroundSize: "cover", height: "190vh"}}>
       <h1 className="text-center">Noticias</h1>
       {store.userRole=="Protector" ? <Link to="/crear-noticia">
             <button className="btn btn-primary mb-2">Nueva noticia</button>
