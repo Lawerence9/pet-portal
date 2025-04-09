@@ -21,10 +21,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			selectedNews:[],
 			animalShelter:[],
 			animalShelterSelected:{},
+			veterinary:[],
+			veterinarySelected:{},
 			adoptions: [],
 			selectedAdoption:[],
-			veterinary:[],
-			sosCase: [],
+						sosCase: [],
 			//host: "https://playground.4geeks.com",
 			selectedElement: {},
 		
@@ -552,16 +553,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 	
 				},
 
-				getVeterinary: async (event) => {
+				getVeterinary: async (veterinary) => {
 
-					if (event) event.preventDefault();
-	
-	
 					const store = getStore();
 					const actions = getActions();
+					// const h = `https://curly-happiness-p9q77xgvq5736vr5-3001.app.github.dev`
+
+					// const uri = `${host}/api/animal-shelters`;;
+					//uri = `${host}/api/animal-shelters`;
+					let uri = "";
+						
 	
-	
-					const uri = `${host}/api/veterinary/${store.veterinary.id}`;
+					if (veterinary == "all"){
+
+						uri = `${host}/api/veterinaries`;
+						setStore({veterinarySelected: ""});
+   
+				   } else { 
+						uri = `${host}/api/veterinaries/${veterinary}`;
+						setStore({veterinary: []});
+						
+					   
+				   }
+   
+						
 	
 					const options = {
 						method: 'GET'
@@ -579,7 +594,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 	
 					const data = await response.json();
-					setStore({veterinary: data.results});
+				//	setStore({animalShelterSelected: data.results});
+				
+
+					if (veterinary == "all"){
+
+						setStore({veterinary: data.results});
+					//	setStore({animalShelterSelected: null});
+					
+   
+				   } else { 
+						setStore({veterinarySelected: data.results});
+						//setStore({animalShelter: []});
+											   
+				   }
+				 
 				
 	
 				},
