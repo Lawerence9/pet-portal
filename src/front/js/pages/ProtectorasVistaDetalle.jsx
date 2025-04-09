@@ -98,7 +98,7 @@ initMap();
 								</div>
 							</div>
 						</div>
-					}
+					
 				</div>
 
 
@@ -107,7 +107,7 @@ initMap();
 
 			</div>
 
-		</div>
+
 
 	);
 };

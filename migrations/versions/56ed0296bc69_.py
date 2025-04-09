@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 50abe6f398ea
+Revision ID: 56ed0296bc69
 Revises: 
-Create Date: 2025-03-26 17:51:40.128919
+Create Date: 2025-04-07 13:41:43.167722
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '50abe6f398ea'
+revision = '56ed0296bc69'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,6 +26,8 @@ def upgrade():
     sa.Column('city', sa.String(), nullable=True),
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('web_url', sa.String(), nullable=True),
+    sa.Column('img_url', sa.String(), nullable=True),
+    sa.Column('coordinates', sa.Float(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
@@ -53,11 +55,13 @@ def upgrade():
     sa.Column('city', sa.String(), nullable=True),
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('web_url', sa.String(), nullable=True),
+    sa.Column('img_url', sa.String(), nullable=True),
+    sa.Column('coordinates', sa.Float(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('adoptions',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('status', sa.Enum('Adopted :)', 'Waiting for you <3', 'Adoption in process', 'Recently rescued', name='status'), nullable=True),
+    sa.Column('status', sa.Enum('Adopted :)', 'Waiting for you <3', 'Adoption in process', 'Recently rescued', name='status_enum'), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.Column('how_old', sa.Integer(), nullable=True),
     sa.Column('specie', sa.Enum('Dog', 'Cat', 'Other', name='specie'), nullable=True),

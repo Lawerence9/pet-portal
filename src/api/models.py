@@ -63,7 +63,7 @@ class News(db.Model):
 class Adoptions(db.Model):
    __tablename__ = 'adoptions'
    id = db.Column(db.Integer, primary_key=True)
-   status = db.Column(db.Enum('Adopted :)', 'Waiting for you <3', 'Adoption in process', 'Recently rescued', name="status"))
+   status = db.Column(db.Enum('Adopted :)', 'Waiting for you <3', 'Adoption in process', 'Recently rescued', name="status_enum"), nullable=False, default='Recently rescued')
    is_active = db.Column(db.Boolean, default=True)
    how_old = db.Column(db.Integer) 
    specie = db.Column(db.Enum('Dog', 'Cat', 'Other', name="specie"))
