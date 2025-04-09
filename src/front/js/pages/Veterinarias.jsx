@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useSyncExternalStore } from "react";
 import { Context } from "../store/appContext.js";
 import { Link, useNavigate, useLocation, Navigate  } from "react-router-dom";
+import Fondovet from "../../img/fondovet.png";
 
 export const Veterinarias = () => {
 	const { store, actions } = useContext(Context);
@@ -20,6 +21,7 @@ export const Veterinarias = () => {
 	
 
 	return (
+
 		<div className="container">
 			<h1 className="text-center my-4">VETERINARIAS</h1>
 
@@ -62,5 +64,10 @@ export const Veterinarias = () => {
 			   
 			</div>
 	</div>
+
+		<div className="text-center mt-5" style={{backgroundImage: `url(${Fondovet})`, backgroundSize: "cover", height: "190vh"}}>
+			<h1>VETERINARIA</h1>	
+						
+		</div>
 	);
 };

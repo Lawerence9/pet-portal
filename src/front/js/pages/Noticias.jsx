@@ -1,17 +1,20 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { Link, useNavigate } from "react-router-dom";
+import Fondonews from "../../img/fnoti.jpeg";
 
-export const Noticias = () => {
+
+  export const Noticias = () => {
   const { store, actions } = useContext(Context);
-  const navigate = useNavigate();
+	const host = process.env.BACKEND_URL;
+	const rutaImagenes = host + "";
 
   useEffect(() => {
     actions.getNotice("all")
   }, [])
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{backgroundImage: `url(${Fondonews})`, backgroundSize: "cover", height: "190vh"}}>
       <h1 className="text-center">Noticias</h1>
       {store.userRole=="Protector" ? <Link to="/crear-noticia">
             <button className="btn btn-primary mb-2">Nueva noticia</button>
@@ -23,7 +26,7 @@ export const Noticias = () => {
               <div className="card-body">
                 <h5 className="card-title mb-2">{iterator.importance_level}</h5>
                 <h5 className="card-title mb-2">{iterator.title}</h5>
-                <img className="card-img-top" src={iterator.img_url} alt="Card image cap" />
+                <img className="card-img-top" src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap" />
                 <div className="mt-2">
                   <Link to="/detalle-noticia">
                     <button type="button" className="btn btn-primary mb-2" onClick={() => actions.getNotice(iterator.id)}>Detalles</button>
