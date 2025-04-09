@@ -82,7 +82,7 @@ export const ProtectorasVistaDetalle = () => {
 										</Link>
 								</div>
 							</div>
-						</div>
+						
 		);
 };
 
