@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import injectContext from "./store/appContext.js";
 // Custom components
 import ScrollToTop from "./component/ScrollToTop.jsx";
@@ -32,7 +33,8 @@ import { AdoptionDetails } from "./pages/AdoptionDetails.jsx";
 import { ContactForm } from "./pages/ContactForm.jsx";
 import { NewAnimalShelter } from "./pages/NewAnimalShelter.jsx";
 
-const basename = process.env.BASENAME || "";
+const basename = process.env.BASENAME || "home";
+console.log(basename);
 
 //create your first component
 const Layout = () => {
@@ -41,14 +43,15 @@ const Layout = () => {
   
 
     // if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
-    
+ 
 
     return (
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
-                    <Routes>
+                     <Routes>
+                        <Route path="/" element={<Navigate to="/home" replace />} />
                         <Route element={<Home />} path="/home" />
                         <Route element={<Error404 />} path="*" />
                         <Route element={<Adopciones />} path="/adopciones" />

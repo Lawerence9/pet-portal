@@ -39,31 +39,21 @@ export const Navbar = () => {
 				<Link to="/adopciones">
 					<span className="navbar-brand mb-0 h1">ADOPCIONES</span>
 				</Link>
-					
-				
+							
+				<Link to="/donaciones">
+					<span className="navbar-brand mb-0 h1">DONACIONES</span>
+				</Link>
 
-				{Object.keys(store.user).length === 0 && (
-                <div className="ml-auto">
-						<Link to="/sign-up">
-						{/* Botones para Login / SignUp u otra cosa */}
-							<button className="btn btn-outline-primary">SIGN UP</button>
-						</Link>
-                </div>
-           		 )}
-
+				<div className="ml-auto">
+					<Link to="/sign-up">
+						<button className="btn btn-primary">SIGN UP</button>
+					</Link>
+				</div>
 
 			
 				<div className="ml-auto">
-				{store.isLogged == true ? 
-				
-
-				<div className="d-flex align-items-center gap-2">
-					<span className="me-2">Hola, {store.user}</span>
-					<span type="button" onClick={handleLogoutButton} className="btn btn-primary">
-						LOGOUT
-					</span>
-				</div> : <Link to="/login"><span className="btn btn-primary">LOGIN</span></Link>}
-						</div>
+				{store.isLogged == true ? <span type="button" onClick={handleLogoutButton} className="btn btn-primary">LOGOUT</span> : <Link to="/login"><span className="btn btn-primary">LOGIN</span></Link>}
+				</div>
 			</div>
 			
 

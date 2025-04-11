@@ -45,6 +45,7 @@ export const Veterinarias = () => {
 			</div>
 			<div className="text-center mt-5" style={{ backgroundImage: `url(${Fondovet})`, backgroundSize: "cover", height: "190vh" }}>
 			</div>
+
 		</div>
 	);
 };

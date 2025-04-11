@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { Mapa } from '../../js/component/Mapa.jsx';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const libraries = ["places"];
 const API_KEY = "AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k";
@@ -12,7 +12,30 @@ export const ProtectorasVistaDetalle = () => {
 	const host = process.env.BACKEND_URL;
 	const rutaImagenes = host + "/";
 
+
+
+
+
+	const listarAnimalShelters = () => {
+
+		const a = actions.getAnimalShelter(store.animalShelterSelected.id);
+		console.log(store.animalShelterSelected)
+
+
+	}
+
+	//  actions.getAnimalShelter("all");
+
+	useEffect(() => {
+		//   getTodos();
+		listarAnimalShelters()
+		//	console.log(store.Protectoras)
+
+	}, []);
+
+
 	return (
+
 		<div className="container">
 			<h1 className="text-center my-4">LOCALIZACIÓN Y CONTACTO</h1>
 			<div className="row">
@@ -24,13 +47,18 @@ export const ProtectorasVistaDetalle = () => {
 							<h5 className="card-title mb-2 text-center">{store.animalShelterSelected.shelter_name}</h5>
 							<img
 								className="card-img-top"
-								src={`${rutaImagenes}${store.animalShelterSelected.web_url}`}
+								src={`${rutaImagenes}${store.animalShelterSelected.img_url}`}
 								alt="Card image cap"
 							/>
 							<h5 className="card-title mb-2">{store.animalShelterSelected.city}</h5>
 							<h5 className="card-title mb-2">{store.animalShelterSelected.address}</h5>
 							<h5 className="card-title mb-2">{store.animalShelterSelected.email}</h5>
 							<h5 className="card-title mb-2">{store.animalShelterSelected.phone_number}</h5>
+						</div>
+						<div>
+							<Link to="/contact-form">
+								<button className="btn btn-primary">Contactar</button>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -41,12 +69,7 @@ export const ProtectorasVistaDetalle = () => {
 					</div>
 				) : null}
 
-			</div>
-			<div>
-				<Link to="/contact-form">
-					<button className="btn btn-primary">Contactar</button>
-				</Link>
-			</div>
+			</div>			
 		</div>
 	);
 };
