@@ -14,6 +14,8 @@ export const Navbar = () => {
         localStorage.removeItem('user');
         navigate("/login")
 	}
+
+
 	return (
 		<nav className="navbar navbar-expand-lg navbar-dark light-dark py-2">
 			<div className="container">
@@ -43,20 +45,21 @@ export const Navbar = () => {
 				<Link to="/adopciones">
 					<span className="navbar-brand mb-0 h1 nav-link-medio">ADOPCIONES</span>
 				</Link>
-				
-				<Link to="/sos-animal">
-					<span className="navbar-brand mb-0 h1 nav-link-medio">SOS</span>
-				</Link>
+					
 
-				<Link to="/tiendas">
-					<span className="navbar-brand mb-0 h1 nav-link-medio">TIENDAS</span>
-				</Link>
+				{Object.keys(store.user).length === 0 && (
+                <div className="ml-auto">
+						<Link to="/sign-up">
+						{/* Botones para Login / SignUp u otra cosa */}
+							<button className="btn btn-outline-primary">SIGN UP</button>
+						</Link>
+                </div>
+           		 )}
 
-				<Link to="/donaciones">
-					<span className="navbar-brand mb-0 h1 nav-link-medio">DONACIONES</span>
-				</Link>
 
+		
 				<div className="ml-auto">
+
 					<Link to="/sign-up">
 						<button className="btn btn-secondary">SIGN UP</button>
 					</Link>
@@ -65,7 +68,21 @@ export const Navbar = () => {
 				<div className="ml-auto">
 				{store.isLogged == true ? <span type="button" onClick={handleLogoutButton} className="btn btn-secondary">LOGOUT</span> : <Link to="/login"><span className="btn btn-secondary">LOGIN</span></Link>}
 				</div>
+
+				{store.isLogged == true ? 
+				
+
+				<div className="d-flex align-items-center gap-2">
+					<span className="me-2">Hola, {store.user}</span>
+					<span type="button" onClick={handleLogoutButton} className="btn btn-primary">
+						LOGOUT
+					</span>
+				</div> : <Link to="/login"><span className="btn btn-primary">LOGIN</span></Link>}
+						</div>
+
 			</div>
+			
+
 		</nav>
 	);
 };

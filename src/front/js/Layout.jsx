@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import injectContext from "./store/appContext.js";
 // Custom components
 import ScrollToTop from "./component/ScrollToTop.jsx";
@@ -18,19 +19,22 @@ import { SitiosInteres } from "./pages/SitiosInteres.jsx";
 import { SosAnimal } from "./pages/SosAnimal.jsx";
 import { Tiendas } from "./pages/Tiendas.jsx";
 import { Veterinarias } from "./pages/Veterinarias.jsx";
-import { VistaDetalles } from "./pages/VistaDetalles.jsx";
+import { VeterinariasVistaDetalle } from "./pages/VeterinariasVistaDetalle.jsx";
 import { ListadoNoticias } from "./pages/ListadoNoticias.jsx";
 import { CrearNoticia } from "./pages/CrearNoticia.jsx";
 import { DetalleNoticia } from "./pages/DetalleNoticia.jsx"
 import { ProtectorasVistaDetalle } from "./pages/ProtectorasVistaDetalle.jsx"
+import { NewVeterinary } from "./pages/NewVeterinary.jsx"
 
 
 import { SignUp } from "./pages/SignUp.jsx";
 import { NewAdoption } from "./pages/NewAdoption.jsx";
 import { AdoptionDetails } from "./pages/AdoptionDetails.jsx";
 import { ContactForm } from "./pages/ContactForm.jsx";
+import { NewAnimalShelter } from "./pages/NewAnimalShelter.jsx";
 
-const basename = process.env.BASENAME || "";
+const basename = process.env.BASENAME || "home";
+console.log(basename);
 
 //create your first component
 const Layout = () => {
@@ -39,14 +43,15 @@ const Layout = () => {
   
 
     // if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
-    
+ 
 
     return (
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
-                    <Routes>
+                     <Routes>
+                        <Route path="/" element={<Navigate to="/home" replace />} />
                         <Route element={<Home />} path="/home" />
                         <Route element={<Error404 />} path="*" />
                         <Route element={<Adopciones />} path="/adopciones" />
@@ -64,9 +69,11 @@ const Layout = () => {
                         <Route element={<SosAnimal />} path="/sos-animal" /> 
                         <Route element={<Tiendas />} path="/Tiendas" />
                         <Route element={<Veterinarias />} path="/veterinarias" />
-                        <Route element={<VistaDetalles />} path="/vista-detalles" />
+                        <Route element={<VeterinariasVistaDetalle />} path="/vista-detalles" />
                         <Route element={<ProtectorasVistaDetalle />} path="/animal-shelter-detail" />
                         <Route element={<ContactForm />} path="/contact-form"/>
+                        <Route element={<NewAnimalShelter />} path="/new-animal-shelter" />
+                        <Route element={<NewVeterinary />} path="/new-veterinary" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
