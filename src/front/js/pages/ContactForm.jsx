@@ -1,14 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const ContactForm = () => {
+    const { store } = useContext(Context);
 
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [comments, setComments] = useState("")
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [comments, setComments] = useState("");
 
-    const handleSubmit = (event) =>{
-        event.preventDefault()
-    }
+    const handleSubmit = async (event) => {
+        event.preventDefault();       
+
+        const response = await fetch(process.env.BACKEND_URL + "/api/send-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                comments,
+                shelter_email: store.animalShelterEmail
+            })
+        });
+
+        if (response.ok) {
+            alert("Mensaje enviado correctamente");
+            setName("");
+            setEmail("");
+            setComments("");
+        } else {
+            alert("Error al enviar el mensaje");
+        }
+    };
+
     return (
         <form className="container d-flex flex-column align-items-center justify-content-center" onSubmit={handleSubmit}>
             <div className="text-center mb-3">
@@ -22,20 +47,18 @@ export const ContactForm = () => {
                 </div>
                 <div className="input-group mb-3">
                     <span>Email
-                        <input  type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" required />
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" required />
                     </span>
                 </div>
                 <div className="input-group mb-3">
                     <span>Comentarios
-                        <textarea type="text" value={comments} onChange={(e) => setComments(e.target.value)} className="form-control" required />
+                        <textarea value={comments} onChange={(e) => setComments(e.target.value)} className="form-control" required />
                     </span>
                 </div>
                 <div className="input-group mb-3 justify-content-center">
-                    <span>
-                        <button type="submit" className="form-control btn btn-primary" required>Enviar</button>
-                    </span>
+                    <button type="submit" className="form-control btn btn-primary">Enviar</button>
                 </div>
             </div>
         </form>
-    )
-}
+    );
+};
