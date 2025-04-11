@@ -24,8 +24,7 @@ import Fondonews from "../../img/fnoti.jpeg";
           <div className="col-md-4 mb-4" key={iterator.id}>
             <div className="card">
               <div className="card-body">
-                <h5 className="card-title mb-2">{iterator.importance_level}</h5>
-                <h5 className="card-title mb-2">{iterator.title}</h5>
+                <h3 className="card-title mb-3">{iterator.title}</h3>
                 <img className="card-img-top" src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap" />
                 <div className="mt-2">
                   <Link to="/detalle-noticia">
