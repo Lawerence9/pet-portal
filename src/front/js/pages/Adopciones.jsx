@@ -14,7 +14,7 @@ export const Adopciones = () => {
 	}, []);
 
 	return (
-		<div className="container"  style={{backgroundImage: `url(${Fondoadop})`, backgroundSize: "cover", height: "190vh"}}>
+		<div className="container"  style={{backgroundImage: `url(${Fondoadop})`, backgroundSize: "containc", height: "100vh",width: "100vw",}}>
 			<h1 className="text-center my-4">ADOPCIONES</h1>
 			{store.userRole === "Protector" && (
 				<Link to="/new-adoption">
