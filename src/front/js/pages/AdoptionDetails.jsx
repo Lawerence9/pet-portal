@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import Fondoadop from "../../img/fadoption.jpeg";
+
 
 export const AdoptionDetails = () => {
 	const { store } = useContext(Context)
@@ -8,7 +10,7 @@ export const AdoptionDetails = () => {
 	const rutaImagenes = host + "";
 
 	return (
-		<div className="container">
+		<div className="mt-2" style={{ backgroundImage: `url(${Fondoadop})`, backgroundSize: "cover", height: "190vh",width:"100%" }}>
 			<h1 className="text-center my-4">Detalles</h1>
 			<div className="row">
 				<div className="col-md-4 mb-4">

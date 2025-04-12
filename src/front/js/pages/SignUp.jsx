@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Fondologin from "../../img/fondo2.png";
+
 
 export const SignUp = () => {
 	const navigate = useNavigate();
@@ -47,21 +49,23 @@ export const SignUp = () => {
 	};
 
 	return (
-		<div className="container d-flex justify-content-center">
+		<div className="d-flex justify-content-center align-items-center" style={{backgroundImage: `url(${Fondologin})`, backgroundSize: "cover", backgroundPosition: "center", minHeight: "100vh",}}>
+						
+         <div className="p-4" style={{backgroundColor: "#f2f2f2", color: "#000", width: "100%", maxWidth: "400px", borderRadius: "10px", boxShadow: "0 4px 12px rgba(0,0,0,0.3)",}}>	
 			<form onSubmit={handleSubmit}>
 				<h2 className="text-center mb-3">Sign Up</h2>
 				<div className="text-center mt-4">
-					<div className="input-group mb-3">
+					<div className="form-group mb-3">
 						<span>Username
 							<input onChange={(e) => setUser_name(e.target.value)} type="text" value={user_name} className="form-control" placeholder="Username" required />
 						</span>
 					</div>
-					<div className="input-group mb-3">
+					<div className="form-group mb-3">
 						<span>Email
 							<input onChange={(e) => setEmail(e.target.value)} type="email" value={email} className="form-control" placeholder="Email" required />
 						</span>
 					</div>
-					<div className="input-group mb-3">
+					<div className="form-group mb-3">
 						<span>Password
 							<input onChange={(e) => setPassword(e.target.value)} type="password" value={password} className="form-control" placeholder="Password" required />
 						</span>
@@ -93,6 +97,7 @@ export const SignUp = () => {
 				{error && <p className="text-danger">{error}</p>}
 				{success && <p className="text-success">{success}</p>}
 			</form>
+		</div>
 		</div>
 	);
 };

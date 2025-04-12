@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
+import Fondodet from "../../img/fondonoticias.png";
 
 export const DetalleNoticia = () => {
   const { store, actions } = useContext(Context);
@@ -13,7 +14,7 @@ export const DetalleNoticia = () => {
   const isLoading = !store.selectedNews || Object.keys(store.selectedNews).length === 0;
 
   return (
-    <div className="container">
+    <div className="mt-2" style={{ backgroundImage: `url(${Fondodet})`, backgroundSize: "cover", height: "190vh",width:"100%" }}>
       <h1 className="text-center my-4">Detalles</h1>
       {isLoading ? (
         <div className="text-center">
