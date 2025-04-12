@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useSyncExternalStore } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
-import Fondopr from "../../img/fprotectora.jpeg";
+import Fondopr from "../../img/fprotectora.png";
 
 export const Protectoras = () => {
 	const { store, actions } = useContext(Context);
@@ -26,7 +26,7 @@ export const Protectoras = () => {
 
 
 	return (
-		<div className="container" style={{ backgroundImage: `url(${Fondopr})`, backgroundSize: "cover", height: "200vh" }}>
+		<div className="mt-2" style={{ backgroundImage: `url(${Fondopr})`, backgroundSize: "cover", height: "200vh" }}>
 			<h1 className="text-center my-4">PROTECTORAS</h1>
       					{store.userRole === "Admin" && (
 								<Link to="/new-animal-shelter">

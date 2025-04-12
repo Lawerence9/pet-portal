@@ -22,8 +22,8 @@ const changeFilter = (filter) => {
 
 	return (
 
-		<div className="container">
-			<h1 className="text-center my-4">VETERINARIAS</h1>
+		<div className="mt-2" style={{ backgroundImage: `url(${Fondovet})`, backgroundSize: "cover", height: "190vh",width:"100%" }}>
+			<h1 className="text-center mt-4">VETERINARIAS</h1>
 			{store.userRole === "Admin" && (
 				<Link to="/new-veterinary">
 					<button className="btn btn-primary mb-2">Nueva veterinaria</button>
@@ -64,8 +64,6 @@ const changeFilter = (filter) => {
 						</div>
 					</div>
 				)}
-			</div>
-			<div className="text-center mt-5" style={{ backgroundImage: `url(${Fondovet})`, backgroundSize: "cover", height: "190vh" }}>
 			</div>
 
 		</div>

@@ -14,7 +14,7 @@ import Fondonews from "../../img/fnoti.jpeg";
   }, [])
 
   return (
-    <div className="container mt-5" style={{backgroundImage: `url(${Fondonews})`, backgroundSize: "cover", height: "190vh"}}>
+    <div className="mt-2" style={{backgroundImage: `url(${Fondonews})`, backgroundSize: "cover", height: "190vh", width:"100%"}}>
       <h1 className="text-center">Noticias</h1>
       {store.userRole=="Protector" ? <Link to="/crear-noticia">
             <button className="btn btn-primary mb-2">Nueva noticia</button>
