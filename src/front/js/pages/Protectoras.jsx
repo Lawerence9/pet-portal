@@ -38,6 +38,7 @@ export const Protectoras = () => {
 							Selecciona Ciudad
 						</button>
 						<ul className="dropdown-menu">
+							<li ><a className="dropdown-item" href="#" onClick={() => changeFilter("")}>Todas</a></li>
 						{store.animalShelter.map((iterator, index) => (
 								<div key={index}>
 									{/* Aquí va lo que quieras renderizar por cada 'iterator' */}
@@ -57,8 +58,8 @@ export const Protectoras = () => {
 				<div className="col-md-4 mb-4">				   
 						{ <div className="card" >								
 								<div className="card-body">
-									<h5 className="card-title mb-2 text-center">{iterator.shelter_name}</h5>
-									<img class="card-img-top" src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap"/>
+									<h3 className="card-title mb-3 text-center">{iterator.shelter_name}</h3>
+									<img class="card-img-top mb-2" src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap"/>
 									<h5 className="card-title mb-2">{iterator.city}</h5>
 								
 																						

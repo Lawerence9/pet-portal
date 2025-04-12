@@ -3,23 +3,33 @@ import { Context } from "../store/appContext.js";
 import emailjs from "emailjs-com";
 
 export const ContactForm = () => {
-   
+
+    
+    
+    const { store, actions } = useContext(Context);
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [comments, setComments] = useState("")
-    const { store } = useContext(Context);
-    const [animalShelterEmail, setanimalShelterEmail] = useState(store.animalShelterSelected.email);
+ 
+    const [animalShelterEmail, setanimalShelterEmail] = useState(store.correo);
     
-
-
-
+    console.log(store.correo);
+    
     const handleSubmit = (event) =>{
+
+      
         event.preventDefault()
+
+       
+     
+         
+
+       
         const templateParams = {
             name: name,
             email: email,
-            email_protectora: animalShelterEmail,
+            email_protectora: store.correo,
             message: comments,
         };
 

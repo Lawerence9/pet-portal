@@ -25,9 +25,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			veterinarySelected:{},
 			adoptions: [],
 			selectedAdoption:[],
+			correo: {},
 						sosCase: [],
 			//host: "https://playground.4geeks.com",
-			selectedElement: {},
+			correoSeleccionado: "",
+			mapDirection: {},
 		
 			
 		},
@@ -42,15 +44,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json()
 				setStore({ message: data.message })
 			},
-
+			setMapDirection: (newUser) => { setStore({ mapDirection: newUser }) },
 			setUser: (newUser) => { setStore({ user: newUser }) },
+			setCorreo: (newCorreo) => { setStore({ correo: newCorreo }) },		
+			setCorreoSeleccionado: (newUser) => { setStore({ correoSeleccionado: newUser }) },
 			setNotice: (newNotice) => { setStore({ notice: newNotice }) },
 			setAnimalShelter: (newAnimalShelter) => { setStore({ animalShelter: newAnimalShelter }) },		
 			setAdoption: (newAdoption) => { setStore({ adoptions: newAdoption }) },
 			setVeterinary: (newVeterinary) => { setStore({ veterinary: newVeterinary }) },
 			setSosCase: (newSosCase) => { setStore({ sosCase: newSosCase }) },
 			setDonation: (newDonation) => { setStore({ donation: newDonation }) },
-			setStore: (newStore) => { setStore({ sosCase: newStore }) },
+		//	setStore: (newStore) => { setStore({ sosCase: newStore }) },
 			
 			setSelectedElements: (elemento) => { setStore({ selectedElement: elemento }) },
 			setIsLogged: (value) => { setStore({ isLogged: value }) },
@@ -373,12 +377,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 	
 				},
 				
+				getUserInfo: async (id) => {
+
+					//	if (event) event.preventDefault();
+				
+		
+						const store = getStore();
+						const actions = getActions();
+		
+				
+						const uri = `${host}/api/users/${id}`;
+					
+						const options = {
+							method: 'GET'
+						}
+					
+		
+						const response = await fetch(uri, options);
+						
+						if (!response.ok) {
+							if (response.status == "404") {
+								console.log("User not found");
+							
+							}
+		
+							return
+						}
+		
+						const data = await response.json();
+						setStore({correo: data.results.email});
+					
+									
+		
+					},
+
 
 				getNotice: async (notice) => {
 
 				
-				//	const store = getStore();
-				//	const actions = getActions();
+					const store = getStore();
+					const actions = getActions();
 				let uri = "";
 
 				if (notice == "all"){
@@ -470,7 +508,9 @@ const getState = ({ getStore, getActions, setStore }) => {
    
 				   } else { 
 						setStore({animalShelterSelected: data.results});
-						//setStore({animalShelter: []});
+						setStore({correo: data.results.email});
+						setStore({mapDirection: store.animalShelterSelected.address + " " + store.animalShelterSelected.city});
+						
 											   
 				   }
 				 
@@ -492,6 +532,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					} else { 
 						uri = `${host}/api/adoptions/${adoptions}`;
+						
+					
 					}
 	
 		
@@ -505,17 +547,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (!response.ok) {
 						if (response.status == "404") {
 							console.log("Adoption not found");
-						
+							
 						}
 	
 						return
 					}
-	
+				
 					const data = await response.json();
+					
 					if (adoptions === "all") {
 						setStore({ adoptions: data.results });
 					} else {
+						
 						setStore({ selectedAdoption: data.results });
+						
+						actions.getUserInfo(data.results.user_id);
+						
+						
 					}
 				
 	
@@ -605,6 +653,7 @@ const getState = ({ getStore, getActions, setStore }) => {
    
 				   } else { 
 						setStore({veterinarySelected: data.results});
+						setStore({correo: data.results.email});
 						//setStore({animalShelter: []});
 											   
 				   }
