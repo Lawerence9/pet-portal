@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
-import Fondoadop from "../../img/fadop.jpeg";
+import Fondoadop from "../../img/fadoptados.png";
 
 export const Adopciones = () => {
 	const { store, actions } = useContext(Context);
@@ -14,7 +14,7 @@ export const Adopciones = () => {
 	}, []);
 
 	return (
-		<div className="container"  style={{backgroundImage: `url(${Fondoadop})`, backgroundSize: "cover", height: "190vh"}}>
+		<div className="mt-2"style={{backgroundImage: `url(${Fondoadop})`, backgroundSize: "cover", height: "200vh"}}>
 			<h1 className="text-center my-4">ADOPCIONES</h1>
 			{store.userRole === "Protector" && (
 				<Link to="/new-adoption">
