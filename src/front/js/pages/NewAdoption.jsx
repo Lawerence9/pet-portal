@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import Fondologin from "../../img/fondo2.png";
 
 export const NewAdoption = () => {
     const { store } = useContext(Context);
@@ -87,107 +88,114 @@ export const NewAdoption = () => {
     };
 
     return (
-        <form
-            className="container d-flex flex-column align-items-center justify-content-center"
-            onSubmit={handleSubmit}
-        >
-            <div className="text-center mb-3">
-                <h2>Nueva adopción</h2>
-            </div>
-            <div>
-                <div className="input-group mb-3">
-                    <input type="file" accept="image/*" onChange={handleFileChange} />
-                    {file && <p>Imagen lista para subir</p>}
-                    {img_url && <img src={img_url} alt="Subida" style={{ maxWidth: "300px" }} />}
+        <div className="d-flex justify-content-center align-items-center"
+            style={{
+                backgroundImage: `url(${Fondologin})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center"
+            }}>
+            <form
+                className="container d-flex flex-column align-items-center justify-content-center"
+                onSubmit={handleSubmit}
+            >
+                <div className="text-center mb-3">
+                    <h2>Nueva adopción</h2>
                 </div>
-                <div className="input-group mb-3">
-                    <span>Edad
-                        <input
-                            onChange={(e) => setHow_old(e.target.value)}
-                            type="number"
-                            min="0"
-                            step="1"
-                            value={how_old}
-                            className="form-control"
-                            required
-                        />
-                    </span>
+                <div>
+                    <div className="input-group mb-3">
+                        <input type="file" accept="image/*" onChange={handleFileChange} />
+                        {file && <p className="text-white">Imagen lista para subir</p>}
+                        {img_url && <img src={img_url} alt="Subida" style={{ maxWidth: "300px" }} />}
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="text-white">Edad
+                            <input
+                                onChange={(e) => setHow_old(e.target.value)}
+                                type="number"
+                                min="0"
+                                step="1"
+                                value={how_old}
+                                className="form-control"
+                                required
+                            />
+                        </span>
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="text-white">Especie
+                            <div className="dropdown">
+                                <button
+                                    className="btn btn-primary dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    {specieLabels[specie] || "Selecciona"}
+                                </button>
+                                <ul className="dropdown-menu">
+                                    <li><span className="dropdown-item" onClick={() => setSpecie("Dog")}>Perro</span></li>
+                                    <li><span className="dropdown-item" onClick={() => setSpecie("Cat")}>Gato</span></li>
+                                    <li><span className="dropdown-item" onClick={() => setSpecie("Other")}>Otros</span></li>
+                                </ul>
+                            </div>
+                        </span>
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="text-white">Raza
+                            <input
+                                onChange={(e) => setRace(e.target.value)}
+                                type="text"
+                                value={race}
+                                className="form-control"
+                                required
+                            />
+                        </span>
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="text-white">Sexo
+                            <div className="dropdown">
+                                <button
+                                    className="btn btn-primary dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    {sexLabels[sex] || "Selecciona"}
+                                </button>
+                                <ul className="dropdown-menu">
+                                    <li><span className="dropdown-item" onClick={() => setSex("Male")}>Macho</span></li>
+                                    <li><span className="dropdown-item" onClick={() => setSex("Female")}>Hembra</span></li>
+                                </ul>
+                            </div>
+                        </span>
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="text-white">Provincia
+                            <input
+                                onChange={(e) => setProvince(e.target.value)}
+                                type="text"
+                                value={province}
+                                className="form-control"
+                                required
+                            />
+                        </span>
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="text-white">Descripción
+                            <textarea
+                                onChange={(e) => setDescription(e.target.value)}
+                                value={description}
+                                className="form-control"
+                                required
+                            />
+                        </span>
+                    </div>
+                    <div className="text-center">
+                        <button type="submit" className="btn btn-primary mb-3">Submit</button>
+                    </div>
                 </div>
-                <div className="input-group mb-3">
-                    <span>Especie
-                        <div className="dropdown">
-                            <button
-                                className="btn btn-primary dropdown-toggle"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                {specieLabels[specie] || "Selecciona"}
-                            </button>
-                            <ul className="dropdown-menu">
-                                <li><span className="dropdown-item" onClick={() => setSpecie("Dog")}>Perro</span></li>
-                                <li><span className="dropdown-item" onClick={() => setSpecie("Cat")}>Gato</span></li>
-                                <li><span className="dropdown-item" onClick={() => setSpecie("Other")}>Otros</span></li>
-                            </ul>
-                        </div>
-                    </span>
-                </div>
-                <div className="input-group mb-3">
-                    <span>Raza
-                        <input
-                            onChange={(e) => setRace(e.target.value)}
-                            type="text"
-                            value={race}
-                            className="form-control"
-                            required
-                        />
-                    </span>
-                </div>
-                <div className="input-group mb-3">
-                    <span>Sexo
-                        <div className="dropdown">
-                            <button
-                                className="btn btn-primary dropdown-toggle"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                {sexLabels[sex] || "Selecciona"}
-                            </button>
-                            <ul className="dropdown-menu">
-                                <li><span className="dropdown-item" onClick={() => setSex("Male")}>Macho</span></li>
-                                <li><span className="dropdown-item" onClick={() => setSex("Female")}>Hembra</span></li>
-                            </ul>
-                        </div>
-                    </span>
-                </div>
-                <div className="input-group mb-3">
-                    <span>Provincia
-                        <input
-                            onChange={(e) => setProvince(e.target.value)}
-                            type="text"
-                            value={province}
-                            className="form-control"
-                            required
-                        />
-                    </span>
-                </div>
-                <div className="input-group mb-3">
-                    <span>Descripción
-                        <textarea
-                            onChange={(e) => setDescription(e.target.value)}
-                            value={description}
-                            className="form-control"
-                            required
-                        />
-                    </span>
-                </div>
-                <div className="text-center">
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                </div>
-            </div>
-            {error && <p className="text-danger">{error}</p>}
-            {success && <p className="text-success">{success}</p>}
-        </form>
+                {error && <p className="text-danger">{error}</p>}
+                {success && <p className="text-success">{success}</p>}
+            </form>
+        </div>
     );
 };

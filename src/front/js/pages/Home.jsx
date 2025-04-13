@@ -5,13 +5,13 @@ import Fondo from "../../img/fondo_home.png";
 
 
 export const Home = () => {
-	
+
 
 	return (
 
-		<div className="text-center mt-2" style={{backgroundImage: `url(${Fondo})`, backgroundSize: "cover", height: "190vh",  backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundColor: "#ffffff", display: "center"}}>
+		<div className="text-center mt-2" style={{ backgroundImage: `url(${Fondo})`, backgroundSize: "cover", height: "190vh", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundColor: "#ffffff", display: "center" }}>
 
-						
+
 		</div>
 	);
 };

@@ -35,7 +35,7 @@ export const Login = () => {
 			backgroundImage: `url(${Fondologin})`,
 			backgroundSize: "cover",
 			backgroundPosition: "center",
-			minHeight: "100vh",}}>
+			minHeight: "70vh",}}>
 				
 		<div
 			className="p-4"

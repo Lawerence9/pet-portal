@@ -24,7 +24,7 @@ export const DetalleNoticia = () => {
         </div>
       ) : (
         <div className="row">
-          <div className="col-md-4 mb-4">
+          <div className="col-md-6 mb-4 mx-auto">
             <div className="card">
               <div className="card-body">
                 <h5 className="card-title mb-2">{store.selectedNews.title}</h5>

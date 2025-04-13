@@ -23,14 +23,14 @@ const changeFilter = (filter) => {
 	return (
 
 		<div className="mt-2" style={{ backgroundImage: `url(${Fondovet})`, backgroundSize: "cover", height: "190vh",width:"100%" }}>
-			<h1 className="text-center mt-4">VETERINARIAS</h1>
+			<h1 className="text-center">Veterinarias</h1>
 			{store.userRole === "Admin" && (
 				<Link to="/new-veterinary">
-					<button className="btn btn-primary mb-2">Nueva veterinaria</button>
+					<button className="btn btn-primary mb-2 mx-3">Nueva veterinaria</button>
 				</Link>
 			)}
 
-			<div className="btn-group my-2">
+			<div className="btn-group my-2 mx-5">
 						<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Selecciona Ciudad
 						</button>
@@ -45,7 +45,7 @@ const changeFilter = (filter) => {
 						</ul>
 			</div>
 
-			<div className="row">
+			<div className="row mx-auto">
 				{/* recorre el array contact usando la función map(); */}
 				{/* loop through the contact array using the map() function; */}
 				{store.veterinary

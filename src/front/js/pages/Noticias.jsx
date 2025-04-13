@@ -17,9 +17,9 @@ import Fondonews from "../../img/fnoti.jpeg";
     <div className="mt-2" style={{backgroundImage: `url(${Fondonews})`, backgroundSize: "cover", height: "190vh", width:"100%"}}>
       <h1 className="text-center">Noticias</h1>
       {store.userRole=="Protector" ? <Link to="/crear-noticia">
-            <button className="btn btn-primary mb-2">Nueva noticia</button>
+            <button className="btn btn-primary mb-2 mx-5">Nueva noticia</button>
             </Link> : ""}
-      <div className="row text-center">
+      <div className="row text-center mx-0">
         {store.notice.map((iterator) =>
           <div className="col-md-4 mb-4" key={iterator.id}>
             <div className="card">

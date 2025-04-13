@@ -27,13 +27,13 @@ export const Protectoras = () => {
 
 	return (
 		<div className="mt-2" style={{ backgroundImage: `url(${Fondopr})`, backgroundSize: "cover", height: "200vh" }}>
-			<h1 className="text-center my-4">PROTECTORAS</h1>
+			<h1 className="text-center">Protectoras</h1>
       					{store.userRole === "Admin" && (
 								<Link to="/new-animal-shelter">
-									<button className="btn btn-primary mb-2">Nueva protectora</button>
+									<button className="btn btn-primary mb-2 mx-3">Nueva protectora</button>
 								</Link>
 							)}
-			<div className="btn-group my-2">
+			<div className="btn-group my-2 mx-5">
 						<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Selecciona Ciudad
 						</button>
@@ -48,7 +48,7 @@ export const Protectoras = () => {
 						</ul>
 			</div>
 
-		<div className="row">
+		<div className="row mx-0">
 					  
 				{/* recorre el array contact usando la función map(); */}  
 				{/* loop through the contact array using the map() function; */}

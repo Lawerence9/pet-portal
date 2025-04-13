@@ -20,14 +20,9 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand-lg navbar-dark light-dark">
 			<div className="container">
-
-				<Link to="/home">
 					<span className="h-full object-contain" style={{ padding: 0 }}>
 						<img alt="" src={logo} style={{ height: "6.9rem", verticalAlign: "middle", marginRight: "0" , borderRadius:"25px"}} />
 					</span>
-
-				</Link>
-
 				<Link to="/home" className="nav-link" style={{boxShadow:"2 0px 4px rgba(212, 7, 212, 0.6)" , borderRadius:"10px"}}>
 					<span className="navbar-brand mb-0 h1">HOME</span>
 				</Link>
@@ -64,7 +59,7 @@ export const Navbar = () => {
 				
 
 				<div className="d-flex align-items-center gap-2">
-					<span className="me-2">Hola, {store.user}</span>
+					<span className="me-2 text-white">Hola, {store.user}</span>
 					<span type="button" onClick={handleLogoutButton} className="btn btn-secondary">
 						LOGOUT
 					</span>
