@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
+import Fondologin from "../../img/fondo2.png";
+
 
 export const Login = () => {
 	const { actions } = useContext(Context);
@@ -28,16 +30,31 @@ export const Login = () => {
 
 
 	return (
-		<div className="container d-flex justify-content-center">
-			<form onSubmit={handleSubmit}>
-				<h2 className="text-center mb-3">Login</h2>
-				<div className="text-center mt-4">
-					<div className="input-group mb-3">
+		<div 	className="d-flex justify-content-center align-items-center"
+		style={{
+			backgroundImage: `url(${Fondologin})`,
+			backgroundSize: "cover",
+			backgroundPosition: "center",
+			minHeight: "100vh",}}>
+				
+		<div
+			className="p-4"
+			style={{
+				backgroundColor: "#f2f2f2",
+				color: "#000",
+				width: "100%",
+				maxWidth: "400px",
+				borderRadius: "10px",
+				boxShadow: "0 4px 12px rgba(0,0,0,0.3)",}}>	
+				<form onSubmit={handleSubmit}>
+				<h2 className="text-center mb-4">Login</h2>
+				<div className="text-center mb-4">
+					<div className="form-group mb-4">
 						<span>Email
 							<input onChange={(e) => setEmail(e.target.value)} type="email" value={email} className="form-control" placeholder="Email" required />
 						</span>
 					</div>
-					<div className="input-group mb-3">
+					<div className="form-group mb-4">
 						<span>Password
 							<input onChange={(e) => setPassword(e.target.value)} type="password" value={password} className="form-control" placeholder="Password" required />
 						</span>
@@ -48,6 +65,7 @@ export const Login = () => {
 				</div>
 				{error && (<div className="container mt-2 alert alert-danger text-center custom-alert">{error}</div>)}
 			</form>
+		</div>
 		</div>
 	);
 };

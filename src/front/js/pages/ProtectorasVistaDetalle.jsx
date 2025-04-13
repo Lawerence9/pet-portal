@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { Mapa } from '../../js/component/Mapa.jsx';
 import { Link, useNavigate } from "react-router-dom";
+import Fondoprodt from "../../img/fondop.jpeg";
 
 const libraries = ["places"];
 const API_KEY = "AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k";
@@ -33,8 +34,8 @@ export const ProtectorasVistaDetalle = () => {
 
 	return (
 
-		<div className="container">
-			<h1 className="text-center my-4">LOCALIZACIÓN Y CONTACTO</h1>
+		<div className="mt-2" style={{ backgroundImage: `url(${Fondoprodt})`, backgroundSize: "cover", height: "190vh",width:"100%" }}>
+	    	<h1 className="text-center my-4">LOCALIZACIÓN Y CONTACTO</h1>
 			<div className="row">
 				{/* recorre el array contact usando la función map(); */}
 				{/* loop through the contact array using the map() function; */}
