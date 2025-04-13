@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-import Fondologin from "../../img/fondo2.png";
+import Fondoanishe from "../../img/rescatitas.jpeg";
 
 export const NewAnimalShelter = () => {
     const { store } = useContext(Context);
@@ -82,12 +82,7 @@ export const NewAnimalShelter = () => {
 
     return (
         <div className="d-flex justify-content-center align-items-center"
-            style={{
-                backgroundImage: `url(${Fondologin})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                minHeight: "70vh",
-            }}>
+            style={{backgroundImage: `url(${Fondoanishe})`, backgroundSize: "cover", backgroundPosition: "center", minHeight: "70vh",}}>
             <form
                 className="container d-flex flex-column align-items-center justify-content-center"
                 onSubmit={handleSubmit}

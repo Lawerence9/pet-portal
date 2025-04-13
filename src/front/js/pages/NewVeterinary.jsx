@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-import Fondologin from "../../img/fondo2.png";
+import Fnewveterinary from "../../img/fondop.jpeg";
 
 export const NewVeterinary = () => {
     const { store } = useContext(Context);
@@ -81,7 +81,7 @@ export const NewVeterinary = () => {
     return (
         <div className="d-flex justify-content-center align-items-center"
             style={{
-                backgroundImage: `url(${Fondologin})`,
+                backgroundImage: `url(${Fnewveterinary})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 minHeight: "70vh",

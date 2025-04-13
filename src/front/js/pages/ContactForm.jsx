@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import emailjs from "emailjs-com";
-import Fondologin from "../../img/fondo2.png";
+import Fcontactform from "../../img/fondpformu.png";
 
 export const ContactForm = () => {
     const { store, actions } = useContext(Context);
@@ -40,7 +40,7 @@ export const ContactForm = () => {
 
     }
     return (
-        <div className="d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${Fondologin})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+        <div className="d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${Fcontactform})`, backgroundSize: "cover", backgroundPosition: "center" }}>
             <form className="container d-flex flex-column align-items-center justify-content-center" onSubmit={handleSubmit} style={{ maxWidth: "700px", margin: "0 auto" }}>
                 <div className="text-center">
                     <h2>Formulario de contacto</h2>

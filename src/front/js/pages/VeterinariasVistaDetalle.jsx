@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { Mapa } from '../component/Mapa.jsx';
 import { Link } from "react-router-dom";
-import Fondologin from "../../img/fondo2.png";
+import Fondovetvista from "../../img/fondovet.png";
 
 const libraries = ["places"];
 const API_KEY = "AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k";
@@ -30,11 +30,7 @@ export const VeterinariasVistaDetalle = () => {
 
 
 	return (
-		<div className="mt-2"
-			style={{
-				backgroundImage: `url(${Fondologin})`,
-				backgroundSize: "cover", height: "190vh", width: "100%"
-			}}>
+		<div className="mt-2" style={{backgroundImage: `url(${Fondovetvista})`, backgroundSize: "cover", height: "100vh", width: "100%"}}>
 			<div className="container">
 				<h1 className="text-center">Localización y contacto</h1>
 				<div className="row">

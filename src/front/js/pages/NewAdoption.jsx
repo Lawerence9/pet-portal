@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-import Fondologin from "../../img/fondo2.png";
+import Fondonuevaadop from "../../img/fadop.jpeg";
 
 export const NewAdoption = () => {
     const { store } = useContext(Context);
@@ -90,7 +90,7 @@ export const NewAdoption = () => {
     return (
         <div className="d-flex justify-content-center align-items-center"
             style={{
-                backgroundImage: `url(${Fondologin})`,
+                backgroundImage: `url(${Fondonuevaadop})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center"
             }}>

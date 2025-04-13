@@ -1,7 +1,7 @@
 import React, { useContext, useEffect,useState } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
-import Fondovet from "../../img/fondovet.png";
+import Fondovet from "../../img/fondocrearvet.png";
 
 export const Veterinarias = () => {
 	const { store, actions } = useContext(Context);
@@ -22,7 +22,7 @@ const changeFilter = (filter) => {
 
 	return (
 
-		<div className="mt-2" style={{ backgroundImage: `url(${Fondovet})`, backgroundSize: "cover", height: "190vh",width:"100%" }}>
+		<div className="mt-2" style={{backgroundImage: `url(${Fondovet})`, backgroundSize: "cover",backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundAttachment: "fixed", height:"100vh", width: "100%"}}>
 			<h1 className="text-center">Veterinarias</h1>
 			{store.userRole === "Admin" && (
 				<Link to="/new-veterinary">
