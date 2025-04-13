@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import Fondologin from "../../img/fondo2.png";
 
 export const CrearNoticia = () => {
     const { store } = useContext(Context);
@@ -81,66 +82,73 @@ export const CrearNoticia = () => {
     };
 
     return (
-        <form
-            className="container d-flex flex-column align-items-center justify-content-center mt-5"
-            onSubmit={handleSubmit}
-        >
-            <div className="text-center mb-3">
-                <h2>Crear Nueva Noticia</h2>
-            </div>
-            <div>
-                <div className="input-group mb-3">
-                    <input type="file" accept="image/*" onChange={handleFileChange} />
-                    {file && <p>Imagen lista para subir</p>}
-                    {img_url && <img src={img_url} alt="Subida" style={{ maxWidth: "300px" }} />}
+        <div className="d-flex justify-content-center align-items-center"
+            style={{
+                backgroundImage: `url(${Fondologin})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center"
+            }}>
+            <form
+                className="container d-flex flex-column align-items-center justify-content-center mt-5"
+                onSubmit={handleSubmit}
+            >
+                <div className="text-center mb-3">
+                    <h2>Crear Nueva Noticia</h2>
                 </div>
-                <div className="input-group mb-3">
-                    <span>Título
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            className="form-control"
-                            required
-                        />
-                    </span>
+                <div>
+                    <div className="input-group mb-3">
+                        <input type="file" accept="image/*" onChange={handleFileChange} />
+                        {file && <p className="text-white">Imagen lista para subir</p>}
+                        {img_url && <img src={img_url} alt="Subida" style={{ maxWidth: "300px" }} />}
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="text-white">Título
+                            <input
+                                type="text"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                className="form-control"
+                                required
+                            />
+                        </span>
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="text-white">Contenido
+                            <textarea
+                                value={body}
+                                onChange={(e) => setBody(e.target.value)}
+                                className="form-control"
+                                rows="4"
+                                required
+                            />
+                        </span>
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="text-white">Nivel de importancia
+                            <div className="dropdown">
+                                <button
+                                    className="btn btn-primary dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    {importanceLabels[importance_level] || "Selecciona"}
+                                </button>
+                                <ul className="dropdown-menu">
+                                    <li><span className="dropdown-item" onClick={() => setImportance_level("low")}>Baja</span></li>
+                                    <li><span className="dropdown-item" onClick={() => setImportance_level("medium")}>Normal</span></li>
+                                    <li><span className="dropdown-item" onClick={() => setImportance_level("high")}>Alta</span></li>
+                                </ul>
+                            </div>
+                        </span>
+                    </div>
+                    <div className="text-center">
+                        <button type="submit" className="btn btn-primary mb-3">Crear Noticia</button>
+                    </div>
                 </div>
-                <div className="input-group mb-3">
-                    <span>Contenido
-                        <textarea
-                            value={body}
-                            onChange={(e) => setBody(e.target.value)}
-                            className="form-control"
-                            rows="4"
-                            required
-                        />
-                    </span>
-                </div>
-                <div className="input-group mb-3">
-                    <span>Nivel de importancia
-                        <div className="dropdown">
-                            <button
-                                className="btn btn-primary dropdown-toggle"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                {importanceLabels[importance_level] || "Selecciona"}
-                            </button>
-                            <ul className="dropdown-menu">
-                                <li><span className="dropdown-item" onClick={() => setImportance_level("low")}>Baja</span></li>
-                                <li><span className="dropdown-item" onClick={() => setImportance_level("medium")}>Normal</span></li>
-                                <li><span className="dropdown-item" onClick={() => setImportance_level("high")}>Alta</span></li>
-                            </ul>
-                        </div>
-                    </span>
-                </div>
-                <div className="text-center">
-                    <button type="submit" className="btn btn-primary">Crear Noticia</button>
-                </div>
-            </div>
-            {error && <p className="text-danger">{error}</p>}
-            {success && <p className="text-success">{success}</p>}
-        </form>
+                {error && <p className="text-danger">{error}</p>}
+                {success && <p className="text-success">{success}</p>}
+            </form>
+        </div>
     );
 };

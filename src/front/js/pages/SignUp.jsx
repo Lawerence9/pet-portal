@@ -49,7 +49,7 @@ export const SignUp = () => {
 	};
 
 	return (
-		<div className="d-flex justify-content-center align-items-center" style={{backgroundImage: `url(${Fondologin})`, backgroundSize: "cover", backgroundPosition: "center", minHeight: "100vh",}}>
+		<div className="d-flex justify-content-center align-items-center" style={{backgroundImage: `url(${Fondologin})`, backgroundSize: "cover", backgroundPosition: "center", minHeight: "70vh",}}>
 						
          <div className="p-4" style={{backgroundColor: "#f2f2f2", color: "#000", width: "100%", maxWidth: "400px", borderRadius: "10px", boxShadow: "0 4px 12px rgba(0,0,0,0.3)",}}>	
 			<form onSubmit={handleSubmit}>
