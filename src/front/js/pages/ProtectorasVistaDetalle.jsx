@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { Mapa } from '../../js/component/Mapa.jsx';
 import { Link } from "react-router-dom";
-import Fondoprodt from "../../img/fondop.jpeg";
+import Fondoprodt from "../../img/fondoadopcion.png";
 
 const libraries = ["places"];
 const API_KEY = "AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k";
