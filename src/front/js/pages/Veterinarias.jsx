@@ -23,7 +23,7 @@ const changeFilter = (filter) => {
 	return (
 
 		<div className="mt-2" style={{backgroundImage: `url(${Fondovet})`, backgroundSize: "cover",backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundAttachment: "fixed", height:"100vh", width: "100%"}}>
-			<h1 className="text-center">Veterinarias</h1>
+			<h1 className="text-center my-4 py-4">Veterinarias</h1>
 			{store.userRole === "Admin" && (
 				<Link to="/new-veterinary">
 					<button className="btn btn-primary mb-2 mx-3">Nueva veterinaria</button>
@@ -55,7 +55,7 @@ const changeFilter = (filter) => {
 						<div className="card" >
 							<div className="card-body">
 								<h3 className="card-title mb-3 text-center">{iterator.veterinary_name}</h3>
-								<img class="card-img-top mb-2" src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap" />
+								<img class="card-img-top mb-2" style={{ width: '400px', height: '500px' }} src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap" />
 								<h5 className="card-title mb-2">{iterator.city}</h5>
 								<Link to="/vista-detalles" >
 									<button type="button" className="btn btn-primary mb-2" onClick={(event) => actions.getVeterinary(iterator.id)} >Ver veterinaria</button>
