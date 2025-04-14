@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import Fondovetvista from "../../img/fondovet.png";
 
 const libraries = ["places"];
-const API_KEY = API_GOOGLE_GEOCODING;
 
+const API_KEY = process.env.API_GOOGLE_GEOCODING;
 
 export const VeterinariasVistaDetalle = () => {
 	const { store, actions } = useContext(Context);
@@ -27,7 +27,7 @@ export const VeterinariasVistaDetalle = () => {
 	return (
 		<div className="mt-2" style={{backgroundImage: `url(${Fondovetvista})`, backgroundSize: "cover", height: "100vh", width: "100%"}}>
 			<div className="container">
-				<h1 className="text-center my-4 py-4">Localización y contacto</h1>
+				<h1 className="text-center">Localización y contacto</h1>
 				<div className="row">
 					{/* recorre el array contact usando la función map(); */}
 					{/* loop through the contact array using the map() function; */}

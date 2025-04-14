@@ -15,7 +15,7 @@ export const DetalleNoticia = () => {
 
   return (
     <div className="mt-2" style={{ backgroundImage: `url(${Fondodet})`, backgroundSize: "cover", height: "190vh",width:"100%" }}>
-      <h1 className="text-center my-4 py-4">Detalles</h1>
+      <h1 className="text-center">Detalles</h1>
       {isLoading ? (
         <div className="text-center">
           <div className="spinner-border text-primary" role="status">

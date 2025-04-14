@@ -24,14 +24,14 @@ export const Protectoras = () => {
 
 	return (
 		<div className="mt-2" style={{ backgroundImage: `url(${Fondopr})`, backgroundSize: "cover", height: "200vh" }}>
-			<h1 className="text-center my-4 py-4">Protectoras</h1>
+			<h1 className="text-center">Protectoras</h1>
       					{store.userRole === "Admin" && (
 								<Link to="/new-animal-shelter">
 									<button className="btn btn-primary mb-2 mx-3">Nueva protectora</button>
 								</Link>
 							)}
 			<div className="btn-group my-2 mx-5">
-				<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				<button className="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 					Selecciona Ciudad
 				</button>
 				<ul className="dropdown-menu">
@@ -56,7 +56,7 @@ export const Protectoras = () => {
 							<div className="card">
 								<div className="card-body">
 									<h3 className="card-title mb-3 text-center">{iterator.shelter_name}</h3>
-									<img class="card-img-top mb-2" style={{ width: '400px', height: '500px' }} src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap"/>
+									<img className="card-img-top mb-2" style={{ width: '400px', height: '500px' }} src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap"/>
 									<h5 className="card-title mb-2">{iterator.city}</h5>
 									<Link to="/animal-shelter-detail">
 										<button type="button" className="btn btn-primary mb-2" onClick={() => actions.getAnimalShelter(iterator.id)}>Ver protectora</button>
