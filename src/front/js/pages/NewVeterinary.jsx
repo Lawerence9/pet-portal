@@ -38,7 +38,6 @@ export const NewVeterinary = () => {
             });
 
             const uploadData = await uploadRes.json();
-            console.log(uploadData);
 
             if (!uploadRes.ok || !uploadData.img_url) {
                 setError("Error al subir la imagen.");
@@ -47,8 +46,6 @@ export const NewVeterinary = () => {
 
             uploadedImageUrl = uploadData.img_url;
             setImg_url(uploadedImageUrl);
-            console.log(uploadedImageUrl);
-
         }
 
         const response = await fetch(`${process.env.BACKEND_URL}/api/veterinaries`, {

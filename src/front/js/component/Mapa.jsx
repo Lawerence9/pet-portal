@@ -28,10 +28,8 @@ export const Mapa = ({ direccion }) => {
 
     console.log("localizacion");
 
-    // if (!isLoaded) return;
 
      const geocoder = new google.maps.Geocoder();
-   // geocoder.geocode({ address: direccion }, (results, status) => {
      geocoder.geocode({ address: direccion }, (results, status) => {
       if (status === 'OK') {
         console.log('Dirección geocodificada: ', results[0]);

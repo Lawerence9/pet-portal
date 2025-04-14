@@ -24,23 +24,23 @@ export const Navbar = () => {
 						<img alt="" src={logo} style={{ height: "6.9rem", verticalAlign: "middle", marginRight: "0" , borderRadius:"25px"}} />
 					</span>
 				<Link to="/home" className="nav-link" style={{boxShadow:"2 0px 4px rgba(212, 7, 212, 0.6)" , borderRadius:"10px"}}>
-					<span className="navbar-brand mb-0 h1">HOME</span>
+					<span className="navbar-brand mb-0 h1 mx-auto">HOME</span>
 				</Link>
 
 				<Link to="/noticias" className="nav-link" style={{boxShadow:"2 0px 4px rgba(212, 7, 212, 0.6)" , borderRadius:"10px"}}>
-					<span className="navbar-brand mb-0 h1">NOTICIAS</span>
+					<span className="navbar-brand mb-0 h1 mx-auto">NOTICIAS</span>
 				</Link>
 
 				<Link to="/protectoras" className="nav-link" style={{boxShadow:"2 0px 4px rgba(212, 7, 212, 0.6)" , borderRadius:"10px"}}>
-					<span className="navbar-brand mb-0 h1">PROTECTORAS</span>
+					<span className="navbar-brand mb-0 h1 mx-auto">PROTECTORAS</span>
 				</Link>
 
 				<Link to="/veterinarias" className="nav-link" style={{boxShadow:"2 0px 4px rgba(212, 7, 212, 0.6)" , borderRadius:"10px"}}>
-					<span className="navbar-brand mb-0 h1">VETERINARIAS</span>
+					<span className="navbar-brand mb-0 h1 mx-auto">VETERINARIAS</span>
 				</Link>
 
 				<Link to="/adopciones" className="nav-link" style={{boxShadow:"2 0px 4px rgba(212, 7, 212, 0.6)" , borderRadius:"10px"}}>
-					<span className="navbar-brand mb-0 h1">ADOPCIONES</span>
+					<span className="navbar-brand mb-0 h1 mx-auto">ADOPCIONES</span>
 				</Link>
 
 

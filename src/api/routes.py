@@ -11,6 +11,9 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import get_jwt
 import os
 from werkzeug.utils import secure_filename
+from api.exts import bcrypt
+
+
 
 api = Blueprint('api', __name__)
 CORS(api)  # Allow CORS requests to this API
@@ -63,23 +66,31 @@ def user(user_id):
 
 @api.route("/sign-up", methods=["POST"])
 def sign_up():
-        response_body = {}
-        data = request.json
-        existing_user = Users.query.filter_by(user_name=data.get("user_name")).first()
-        if existing_user:
-            response_body["message"]= "User name already taken"
-            return response_body, 400
-        new_user = Users(user_name = data.get("user_name"),
-                         email = data.get("email"),
-                         password = data.get("password"),
-                         role = data.get("role"),
-                         is_active = True)
-        db.session.add(new_user)
-        db.session.commit()
-        response_body["message"] = "User created correctly"
-        response_body["email"] = new_user.email
-        response_body["role"] = new_user.role
-        return response_body, 200
+    response_body = {}
+    data = request.json
+    existing_user = Users.query.filter_by(user_name=data.get("user_name")).first()
+    if existing_user:
+        response_body["message"]= "User name already taken"
+        return response_body, 400
+
+    # Hash de la contraseña
+    hashed_password = bcrypt.generate_password_hash(data.get("password")).decode('utf-8')
+
+    new_user = Users(
+        user_name=data.get("user_name"),
+        email=data.get("email"),
+        password=hashed_password,
+        role=data.get("role"),
+        is_active=True
+    )
+
+    db.session.add(new_user)
+    db.session.commit()
+    response_body["message"] = "User created correctly"
+    response_body["email"] = new_user.email
+    response_body["role"] = new_user.role
+    return response_body, 200
+
 
 
 @api.route("/login", methods=["POST"])
@@ -88,16 +99,20 @@ def login():
     data = request.json
     email = data.get("email", None)
     password = data.get("password", None)
-    row = db.session.execute(db.select(Users).where(Users.email == email, Users.password == password, Users.is_active == True)).scalar()
-    if row is None:
+
+    user = Users.query.filter_by(email=email, is_active=True).first()
+    if not user or not bcrypt.check_password_hash(user.password, password):
         response_body["message"] = "Bad username or password"
         return response_body, 400
-    user = row.serialize()
-    claims = {"user_id": user["id"],
-              "role": user["role"]}
+
+    serialized_user = user.serialize()
+    claims = {
+        "user_id": serialized_user["id"],
+        "role": serialized_user["role"]
+    }
     access_token = create_access_token(identity=email, additional_claims=claims)
     response_body["message"] = "User logged in"
-    response_body["results"] = user
+    response_body["results"] = serialized_user
     response_body["access_token"] = access_token
     return response_body, 200
 

@@ -16,18 +16,10 @@ export const ProtectorasVistaDetalle = () => {
 	const listarAnimalShelters = () => {
 
 		const a = actions.getAnimalShelter(store.animalShelterSelected.id);
-		console.log(store.animalShelterSelected)
-
-
 	}
 
-	//  actions.getAnimalShelter("all");
-
 	useEffect(() => {
-		//   getTodos();
 		listarAnimalShelters()
-		//	console.log(store.Protectoras)
-
 	}, []);
 
 

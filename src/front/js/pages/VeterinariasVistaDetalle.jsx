@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Fondovetvista from "../../img/fondovet.png";
 
 const libraries = ["places"];
-const API_KEY = "AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k";
+const API_KEY = API_GOOGLE_GEOCODING;
 
 
 export const VeterinariasVistaDetalle = () => {
@@ -15,14 +15,9 @@ export const VeterinariasVistaDetalle = () => {
 	const rutaImagenes = host + "/";
 
 
-
-
 	const listarAnimalShelters = () => {
 
 		const a = actions.getVeterinary(store.veterinarySelected.id);
-		console.log(store.veterinarySelected)
-
-
 	}
 	useEffect(() => {
 		listarAnimalShelters()
