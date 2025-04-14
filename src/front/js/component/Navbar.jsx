@@ -23,6 +23,7 @@ export const Navbar = () => {
     textDecoration: "none",
   };
 
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark light-dark">
       <div className="container">

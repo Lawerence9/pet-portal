@@ -19,8 +19,9 @@ export const Adopciones = () => {
 	}, []);
 
 	return (
-		<div className="mt-2" style={{ backgroundImage:`url(${Fondoadop})`, backgroundSize: "100% 100%", backgroundPosition: "center", backgroundAttachment: "fixed", height:"180vh", width: "100%"}}>
-			<h1 className="text-center my-4 py-4">Adopciones</h1>
+
+		<div className="mt-2" style={{ backgroundImage:`url(${Fondoadop})`, backgroundSize: "100%", backgroundPosition: "center", height:"180vh", width: "100%"}}>
+			<h1 className="text-center">Adopciones</h1>
 			{store.userRole === "Protector" && (
 				<Link to="/new-adoption">
 					<button className="btn btn-primary mb-2 mx-5">Nueva adopción</button>

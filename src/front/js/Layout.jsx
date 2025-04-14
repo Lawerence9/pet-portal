@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import injectContext from "./store/appContext.js";
+import injectContext, { Context } from "./store/appContext.js";
 // Custom components
 import ScrollToTop from "./component/ScrollToTop.jsx";
 import { BackendURL } from "./component/BackendURL.jsx";
@@ -38,11 +38,16 @@ console.log(basename);
 
 //create your first component
 const Layout = () => {
+    const{ actions } = useContext(Context)
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
   
 
     // if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+    useEffect(() => {
+        actions.syncTokenFromLocalStorage();
+    }, []);
+    
  
 
     return (
