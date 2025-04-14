@@ -100,12 +100,29 @@ body {
   .nav-link {
     box-shadow: 0 4px 10px rgba(106, 27, 88, 0.6);
     text-decoration: none;
+    border-bottom: none;
+    
+  }
+
+  .nav-link:hover {
+    transform: scale(1.05);
+    
   }
   
   .nav-link span {
-    border-bottom: 2px solid rgba(255,255,255,0.2);
+    
     padding-bottom: 0.5rem;
     transition: border-color 0.3s ease;
+    
   }
+
+  .btn {
+    box-shadow: 0 4px 10px rgba(106, 27, 88, 0.6);
+    background-color: rgba(20, 13, 21, 1);
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  
   
   

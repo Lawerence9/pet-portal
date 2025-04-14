@@ -19,17 +19,8 @@ export const Veterinarias = () => {
 	}, []);
 
 	return (
-		<div className="mt-2" style={{
-			backgroundImage: `url(${Fondovet})`,
-			backgroundSize: "cover",
-			backgroundRepeat: "no-repeat",
-			backgroundPosition: "center",
-			backgroundAttachment: "fixed",
-			height: "100vh",
-			width: "100%"
-		}}>
-			<h1 className="text-center">Veterinarias</h1>
-
+		<div className="mt-2" style={{backgroundImage: `url(${Fondovet})`, backgroundSize: "cover",backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundAttachment: "fixed", height:"100vh", width: "100%"}}>
+			<h1 className="text-center my-4 py-4">Veterinarias</h1>
 			{store.userRole === "Admin" && (
 				<Link to="/new-veterinary">
 					<button className="btn btn-primary mb-2 mx-3">Nueva veterinaria</button>
@@ -54,20 +45,17 @@ export const Veterinarias = () => {
 
 			<div className="row mx-auto">
 				{store.veterinary
-					.filter(vet => filter === "" || vet.city === filter)
-					.map((iterator) => (
-						<div key={iterator.id} className="col-md-4 mb-4">
-							<div className="card">
-								<div className="card-body">
-									<h3 className="card-title mb-3 text-center">{iterator.veterinary_name}</h3>
-									<img className="card-img-top mb-2" src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap" />
-									<h5 className="card-title mb-2">{iterator.city}</h5>
-									<Link to="/vista-detalles">
-										<button type="button" className="btn btn-primary mb-2" onClick={() => actions.getVeterinary(iterator.id)}>
-											Ver veterinaria
-										</button>
-									</Link>
-								</div>
+								.filter(shelter => filter === "" || shelter.city === filter)
+								.map((iterator) =>
+					<div key={iterator.id} className="col-md-4 mb-4">
+						<div className="card" >
+							<div className="card-body">
+								<h3 className="card-title mb-3 text-center">{iterator.veterinary_name}</h3>
+								<img className="card-img-top mb-2" style={{ width: '400px', height: '500px' }} src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap" />
+								<h5 className="card-title mb-2">{iterator.city}</h5>
+								<Link to="/vista-detalles" >
+									<button type="button" className="btn btn-primary mb-2" onClick={(event) => actions.getVeterinary(iterator.id)} >Ver veterinaria</button>
+								</Link>
 							</div>
 						</div>
 					))}
