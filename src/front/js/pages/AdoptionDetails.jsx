@@ -11,7 +11,7 @@ export const AdoptionDetails = () => {
 
 	return (
 		<div className="mt-2" style={{ backgroundImage: `url(${Fondoadop})`, backgroundSize: "cover", height: "190vh", width: "100%" }}>
-			<h1 className="text-center my-4 py-4">Detalles</h1>
+			<h1 className="text-center">Detalles</h1>
 			<div className="row">
 				<div className="col-md-6 mb-4 mx-auto">
 					{<div className="card" >
