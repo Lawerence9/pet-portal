@@ -20,7 +20,7 @@ export const Adopciones = () => {
 
 	return (
 		<div className="mt-2" style={{ backgroundImage:`url(${Fondoadop})`, backgroundSize: "100% 100%", backgroundPosition: "center", backgroundAttachment: "fixed", height:"180vh", width: "100%"}}>
-			<h1 className="text-center">Adopciones</h1>
+			<h1 className="text-center my-4 py-4">Adopciones</h1>
 			{store.userRole === "Protector" && (
 				<Link to="/new-adoption">
 					<button className="btn btn-primary mb-2 mx-5">Nueva adopción</button>
@@ -48,7 +48,7 @@ export const Adopciones = () => {
 							<div className="card">
 								<div className="card-body">
 									<h3 className="card-title mb-3 text-center">{iterator.status}</h3>
-									<img className="card-img-top mb-2" src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap" />
+									<img className="card-img-top mb-2" style={{ width: '400px', height: '500px' }} src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap" />
 									<h5 className="card-title mb-2">{iterator.province}</h5>
 									<Link to="/adoption-details">
 										<button

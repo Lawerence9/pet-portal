@@ -15,7 +15,7 @@ import Fondonews from "../../img/fnoti.jpeg";
 
   return (
     <div className="mt-2" style={{backgroundImage: `url(${Fondonews})`, backgroundSize: "cover", height: "190vh", width:"100%"}}>
-      <h1 className="text-center">Noticias</h1>
+      <h1 className="text-center my-4 py-4">Noticias</h1>
       {store.userRole=="Protector" ? <Link to="/crear-noticia">
             <button className="btn btn-primary mb-2 mx-5">Nueva noticia</button>
             </Link> : ""}
@@ -25,7 +25,7 @@ import Fondonews from "../../img/fnoti.jpeg";
             <div className="card">
               <div className="card-body">
                 <h3 className="card-title mb-3">{iterator.title}</h3>
-                <img className="card-img-top" src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap" />
+                <img className="card-img-top" style={{ width: '400px', height: '500px' }} src={`${rutaImagenes}/${iterator.img_url}`} alt="Card image cap" />
                 <div className="mt-2">
                   <Link to="/detalle-noticia">
                     <button type="button" className="btn btn-primary mb-2" onClick={() => actions.getNotice(iterator.id)}>Detalles</button>
