@@ -21,7 +21,7 @@ export const Veterinarias = () => {
 
 	return (
 		<div className="mt-2" style={{ backgroundImage: `url(${Fondovet})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundAttachment: "fixed", height: "100vh", width: "100%" }}>
-			<h1 className="text-center">Veterinarias</h1>
+			<h1 className="text-center py-4">Veterinarias</h1>
 			{store.userRole === "Admin" && (
 				<Link to="/new-veterinary">
 					<button className="btn btn-primary mb-2 mx-3">Nueva veterinaria</button>

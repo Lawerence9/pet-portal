@@ -64,7 +64,7 @@ export const Navbar = () => {
                 className="nav-link d-flex justify-content-center align-items-center"
                 style={navLinkStyle}
               >
-                <span className="navbar-brand mb-0 h1">HOME</span>
+                <span className="navbar-brand mb-0 h1 mx-auto">HOME</span>
               </Link>
             </li>
             <li className="nav-item mx-2">
@@ -73,7 +73,7 @@ export const Navbar = () => {
                 className="nav-link d-flex justify-content-center align-items-center"
                 style={navLinkStyle}
               >
-                <span className="navbar-brand mb-0 h1">NOTICIAS</span>
+                <span className="navbar-brand mb-0 h1 mx-auto">NOTICIAS</span>
               </Link>
             </li>
             <li className="nav-item mx-2">
@@ -82,7 +82,7 @@ export const Navbar = () => {
                 className="nav-link d-flex justify-content-center align-items-center"
                 style={navLinkStyle}
               >
-                <span className="navbar-brand mb-0 h1">PROTECTORAS</span>
+                <span className="navbar-brand mb-0 h1 mx-auto">PROTECTORAS</span>
               </Link>
             </li>
             <li className="nav-item mx-2">
@@ -91,7 +91,7 @@ export const Navbar = () => {
                 className="nav-link d-flex justify-content-center align-items-center"
                 style={navLinkStyle}
               >
-                <span className="navbar-brand mb-0 h1">VETERINARIAS</span>
+                <span className="navbar-brand mb-0 h1 mx-auto">VETERINARIAS</span>
               </Link>
             </li>
             <li className="nav-item mx-2">
@@ -100,7 +100,7 @@ export const Navbar = () => {
                 className="nav-link d-flex justify-content-center align-items-center"
                 style={navLinkStyle}
               >
-                <span className="navbar-brand mb-0 h1">ADOPCIONES</span>
+                <span className="navbar-brand mb-0 h1 mx-auto">ADOPCIONES</span>
               </Link>
             </li>
           </ul>

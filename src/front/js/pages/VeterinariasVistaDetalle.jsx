@@ -27,7 +27,7 @@ export const VeterinariasVistaDetalle = () => {
 	return (
 		<div className="mt-2" style={{backgroundImage: `url(${Fondovetvista})`, backgroundSize: "cover", height: "100vh", width: "100%"}}>
 			<div className="container">
-				<h1 className="text-center">Localización y contacto</h1>
+				<h1 className="text-center py-4">Localización y contacto</h1>
 				<div className="row">
 					{/* recorre el array contact usando la función map(); */}
 					{/* loop through the contact array using the map() function; */}

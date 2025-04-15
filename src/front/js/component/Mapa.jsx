@@ -11,13 +11,13 @@ export const Mapa = ({ direccion }) => {
 
 
 
-  const API_KEY = "AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k";
+  const API_KEY = process.env.GOOGLE_API_KEY;
   const [coordenadas, setCoordenadas] = useState(null);
 
 
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: 'AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k', // Reemplaza 'TU_API_KEY' con tu clave de API de Google
+    googleMapsApiKey: API_KEY, // Reemplaza 'TU_API_KEY' con tu clave de API de Google
     libraries: ['places'], // Necesario para la geocodificación
   });
 

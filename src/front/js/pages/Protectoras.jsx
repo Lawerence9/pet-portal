@@ -24,7 +24,7 @@ export const Protectoras = () => {
 
 	return (
 		<div className="mt-2" style={{ backgroundImage: `url(${Fondopr})`, backgroundSize: "cover", height: "200vh" }}>
-			<h1 className="text-center">Protectoras</h1>
+			<h1 className="text-center py-4">Protectoras</h1>
       					{store.userRole === "Admin" && (
 								<Link to="/new-animal-shelter">
 									<button className="btn btn-primary mb-2 mx-3">Nueva protectora</button>
