@@ -5,7 +5,7 @@ import Fondologin from "../../img/fondo2.png";
 
 export const SignUp = () => {
 	const navigate = useNavigate();
-
+	const devMode = "true";
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [user_name, setUser_name] = useState("");
@@ -85,6 +85,13 @@ export const SignUp = () => {
 									<li><span className="dropdown-item" onClick={() => setRole("User")}>Usuario</span></li>
 									<li><span className="dropdown-item" onClick={() => setRole("Protector")}>Protectora</span></li>
 									<li><span className="dropdown-item" onClick={() => setRole("Veterinary")}>Veterinaria</span></li>
+									{devMode ? (
+										<li>
+											<span className="dropdown-item" onClick={() => setRole("Admin")}>
+												Administrador
+											</span>
+										</li>
+									) : null}
 								</ul>
 							</div>
 							{showRoleError && <div className="text-danger mt-1">* Este campo es obligatorio</div>}
