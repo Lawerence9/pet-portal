@@ -7,7 +7,6 @@ export const Mapa = ({ direccion }) => {
 
 
 const libraries = ["places"];
-const API_KEY = "AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k";
 const [coordenadas, setCoordenadas] = useState(null);
 
     
