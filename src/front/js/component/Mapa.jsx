@@ -12,7 +12,7 @@ const [coordenadas, setCoordenadas] = useState(null);
     
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: 'AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k', // Reemplaza 'TU_API_KEY' con tu clave de API de Google
+    // googleMapsApiKey:  // Reemplaza 'TU_API_KEY' con tu clave de API de Google
     libraries: ['places'], // Necesario para la geocodificación
   });
 
