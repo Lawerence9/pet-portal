@@ -4,7 +4,7 @@ import {Mapa} from '../../js/component/Mapa.jsx';
 import { Link, useNavigate } from "react-router-dom";
 
 const libraries = ["places"];
-const API_KEY = "AIzaSyDmy8sAYm7a65M-7R7qm-vYNIwbb2pPu7k";
+
 
 
 export const ProtectorasVistaDetalle = () => {
